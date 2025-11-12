@@ -11,8 +11,9 @@ urlpatterns = [
     path('user/welcome/', views.welcome_user, name='welcome_user'),
     
     #solicitar frete
-    path('user/fretes/historico/', views.fretes_solicitados, name='fretes_solicitados'),
+    # path('user/fretes/historico/', views.fretes_solicitados, name='fretes_solicitados'),
     path('user/<int:id>/fretes/solicitar/', views.solicitar_frete, name='solicitar_frete'),
+    path('user/<int:id>/frete/concluido/', views.frete_concluido, name='frete_concluido'),
     path('user/fretes/status/', views.status_frete, name='status_frete'),
 
     # path('user/<int:id>/frete/<int:id>/editar', views.solicitar_frete, name='solicitar_frete'),

@@ -98,34 +98,6 @@ def welcome_user(request):
 
     return render(request, 'tela_inicial_usuario.html', {'usuario': usuario})
 
-
-
-# lista os fretes solicitados pelo usuario
-def fretes_solicitados(request):
-    usuario_id = request.session.get('usuario_id')
-    if not usuario_id:
-        return redirect('login_user')  # redireciona se não estiver logado
-
-    usuario = Usuario.objects.get(id=usuario_id)
-    fretes = solicitarFrete.objects.filter(usuario=usuario)
-    
-    return render(request, 'tela_fretes_solicitados.html', {
-        'fretes': fretes
-    })
-    
-def status_frete(request):
-    usuario_id = request.session.get('usuario_id')
-    if not usuario_id:
-        return redirect('login_user')
-
-    try:
-        frete = solicitarFrete.objects.filter(usuario_id=usuario_id).last()
-    except solicitarFrete.DoesNotExist:
-        frete = None
-
-    return render(request, 'tela_status_frete.html', {'frete': frete})
-
-
 # Solicitar frete
 def solicitar_frete(request, id):
     usuario_id = request.session.get('usuario_id')
@@ -155,10 +127,49 @@ def solicitar_frete(request, id):
         novo_frete.usuario = usuario_logado
         novo_frete.save()
 
-        return redirect('fretes_solicitados', id=usuario_id)
+        return redirect('frete_concluido', id=usuario_id)
 
 
     return render(request, 'tela_solicitar_frete.html', {'usuario': usuario_logado})
+
+# tela de frete após a sua conclusão
+# apos o pedido de frete - o usuario virá para essa tela
+def frete_concluido(request, id):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login_user')  # redireciona se não estiver logado
+
+    usuario = Usuario.objects.get(id=usuario_id)
+    fretes = solicitarFrete.objects.filter(usuario=usuario)
+    
+    return render(request, 'tela_frete_concluido.html', {
+        'fretes': fretes
+    })
+
+#tela de notificações de frete e seus status de forma prévia (fretes já solicitados)
+ ########## EM DESENVOLVIMENTO....
+# lista os fretes solicitados pelo usuario
+# def notificacoes_fretes(request):
+#     usuario_id = request.session.get('usuario_id')
+#     if not usuario_id:
+#         return redirect('login_user')  # redireciona se não estiver logado
+
+    
+
+
+# verifica o status do frete escolhido
+# o usuario vê o status do seu frete
+def status_frete(request):
+    usuario_id = request.session.get('usuario_id')
+    if not usuario_id:
+        return redirect('login_user')
+
+    try:
+        frete = solicitarFrete.objects.filter(usuario_id=usuario_id).last()
+    except solicitarFrete.DoesNotExist:
+        frete = None
+
+    return render(request, 'tela_status_frete.html', {'frete': frete})
 
 
 
