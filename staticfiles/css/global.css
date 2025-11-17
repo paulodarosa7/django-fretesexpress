@@ -1,0 +1,102 @@
+/* Container da página */
+.perfil-page {
+    width: 90%;
+    max-width: 450px;
+    margin: 50px auto;
+    background: #1E1E1E;
+    padding: 20px;
+    border-radius: 16px;
+    color: white;
+    font-family: monospace;
+}
+
+/* Título */
+.titulo {
+    color: #f0b400;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Avatar */
+.avatar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.avatar img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 2px solid #f0b400;
+}
+
+/* Formulário */
+.form-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Labels */
+.label {
+    color: #f0b400;
+    font-size: 1rem;
+    text-align: left;
+    font-family: monospace;
+}
+
+/* Inputs iguais ao estilo do cadastro */
+.form-edit input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: white;
+    font-size: 1rem;
+}
+
+/* Botão salvar */
+.btn-salvar {
+    background: #f0b400;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-salvar:hover {
+    background: #ffffff;
+    color: #1E1E1E;
+}
+
+/* Link voltar */
+.voltar {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #f0b400;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.voltar:hover {
+    color: #fff;
+}
+
+.lista-fretes {
+    margin-top: 20px;
+}
+
+.card-frete {
+    background: #1f1c1d;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    color: white;
+}

@@ -1,0 +1,72 @@
+/* Reset básico */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #1E1E1E; /* fundo preto/cinza escuro */
+  font-family: 'Kaushan Script';
+  overflow: hidden;
+}
+
+/* Splash */
+#splash {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* centraliza verticalmente */
+  align-items: center;     /* centraliza horizontalmente */
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 4s; /* some após 4s */
+  position: relative;
+}
+
+/* Logo centralizada */
+.logo {
+  font-size: 4rem; /* maior destaque */
+  font-weight: normal; /* tira o bold */
+  color: white;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards; /* animação aparecer */
+}
+
+/* Skyline responsivo centralizado */
+#background {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  filter: brightness(0) contrast(100%); /* deixa preto sólido */
+  z-index: -1;
+}
+
+/* Tela principal */
+#main {
+  display: none;
+  color: #fff;
+  text-align: center;
+  font-size: 2rem;
+  padding: 20px;
+}
+
+/* Animações */
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

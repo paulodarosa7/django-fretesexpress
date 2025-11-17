@@ -1,4 +1,4 @@
-{% extends 'base_inside.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block extra_css %}
@@ -6,34 +6,42 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
 
-    <h2 class="titulo">Perfil</h2>
+<div class="perfil-page visualizacao">
 
-    <div class="fotoPerfil"></div>
+    <h1 class="titulo">perfil</h1>
 
-    <div class="nomeArea">{{ usuario.nome }}</div>
-
-    <div class="section">
-        <div class="label">Dados</div>
-
-        <div class="row">
-            <span class="valor">Email: {{ usuario.email }}</span>
-        </div>
-
-        <div class="row">
-            <span class="valor">Telefone: {{ usuario.telefone }}</span>
-        </div>
-
-        <div class="row">
-            <span class="valor">CPF: {{ usuario.cpf }}</span>
-        </div>
+    <div class="avatar">
+        <img src="{% static 'img/avatar.png' %}" alt="avatar">
     </div>
 
-    <div class="section link-acoes">
-        <a href="{% url 'editar_perfil_user' usuario.id %}">Editar perfil completo</a>
-        <a href="{% url 'welcome_user' %}">voltar</a>
+    <div class="info-bloco">
+
+        <div class="linha">
+            <span class="label">Nome</span>
+            <span class="valor">{{ usuario.nome }}</span>
+        </div>
+
+        <div class="linha">
+            <span class="label">Email</span>
+            <span class="valor">{{ usuario.email }}</span>
+        </div>
+
+        <div class="linha">
+            <span class="label">Telefone</span>
+            <span class="valor">{{ usuario.tel}}</span>
+        </div>
+
+        <div class="linha">
+            <span class="label">CPF</span>
+            <span class="valor">{{ usuario.cpf }}</span>
+        </div>
+
     </div>
+
+    <a href="{% url 'editar_perfil_user' usuario.id %}" class="btn-link">Editar perfil completo</a>
+    <a href="{% url 'welcome_user' %}" class="btn-link">Voltar</a>
 
 </div>
+
 {% endblock %}

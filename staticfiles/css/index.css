@@ -1,0 +1,106 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: white;
+  text-align: center;
+}
+
+.logo {
+  margin-top: 40px;
+  font-size: 36px;
+  font-family: 'Brush Script MT', cursive;
+  color: white;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin: 10px 0;
+  color: white;
+}
+
+.form {
+  margin: 20px auto;
+  width: 90%;
+  max-width: 400px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #000;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #f1c40f;
+  color: #111;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.btn.logout {
+  background-color: #c0392b;
+  color: white;
+}
+
+.link {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: white;
+  text-decoration: underline;
+}
+
+.footer {
+  margin-top: 20px;
+  font-family: 'Brush Script MT', cursive;
+  font-size: 18px;
+  color: #f1c40f;
+}
+
+.page.hidden {
+  display: none;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tab {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.tab.active {
+  background-color: #f1c40f;
+  color: #111;
+}
+
+#map {
+  height: 400px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 600px;
+  border: 2px solid #f1c40f;
+  border-radius: 6px;
+}

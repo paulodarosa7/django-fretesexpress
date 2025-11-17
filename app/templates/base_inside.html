@@ -41,13 +41,12 @@
         </div>
 
 
-
             {% if request.session.usuario_id %}
                 <a href="{% url 'welcome_user' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
                 <a href="{% url 'fretes_solicitados' request.session.usuario_id %}" class="menu-item">
                     <span class="icon">🚚</span> Meus Fretes</a>
             {% elif request.session.freteiro_id %}
-                <a href="{% url 'welcome_user' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
+                <a href="{% url 'welcome_freteiro' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
                 <a href="{% url 'fretes_aceitos' request.session.freteiro_id %}" class="menu-item">
                     <span class="icon">🚚</span> Meus Fretes</a>
             {% endif %}           

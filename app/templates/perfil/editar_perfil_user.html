@@ -1,4 +1,4 @@
-{% extends "base_inside.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Editar Perfil{% endblock %}
@@ -29,8 +29,13 @@
         <label class="label">Telefone</label>
         <input type="text" class="input" name="tel" value="{{ usuario.tel }}" required>
 
+
         <button type="submit" class="btn-salvar">Salvar</button>
     </form>
+
+    {% comment %} <a href="{% url 'editar_dados_veiculo' %}" class="alterar-veiculo">
+        Alterar dados do veículo
+    </a> {% endcomment %}
 
     <a href="{% url 'perfil_user' usuario.id %}" class="voltar">voltar</a>
 

@@ -1,0 +1,70 @@
+body {
+    background: #111;
+    color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.topbar {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    position: relative;
+}
+
+.icone-sino {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    width: 28px;
+}
+
+.logo {
+    font-family: 'Kaushan Script', cursive;
+    font-size: 30px;
+}
+
+.container {
+    padding: 20px;
+}
+
+h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #ffcc00;
+}
+
+.card-frete {
+    background: #1b1b1b;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+}
+
+.card-frete h3 {
+    margin-top: 0;
+    color: #ffcc00;
+}
+
+.btnAceitar {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+
+    background: #ffcc00;
+    color: black;
+    padding: 10px 0;
+    border-radius: 10px;
+    text-decoration: none;
+
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nenhum {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 18px;
+}
