@@ -1,0 +1,39 @@
+{% extends "base_inside.html" %}
+{% load static %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="perfil-page">
+
+    <h1 class="titulo">Editar perfil</h1>
+
+    <div class="avatar">
+        <img src="{% static 'img/avatar.png' %}" alt="avatar">
+    </div>
+
+    <form method="POST" class="form-edit">
+        {% csrf_token %}
+
+        <label class="label">Nome</label>
+        <input type="text" class="input" name="nome" value="{{ usuario.nome }}" required>
+
+        <label class="label">Email</label>
+        <input type="email" class="input" name="email" value="{{ usuario.email }}" required>
+
+        <label class="label">Telefone</label>
+        <input type="text" class="input" name="tel" value="{{ usuario.tel }}" required>
+
+        <button type="submit" class="btn-salvar">Salvar</button>
+    </form>
+
+    <a href="{% url 'perfil_user' usuario.id %}" class="voltar">voltar</a>
+
+</div>
+
+{% endblock %}

@@ -1,17 +1,17 @@
+{% extends 'base.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Status do Frete</title>
-  <link rel="stylesheet" href="{% static 'css/frete_solicitacoes.css' %}">
-</head>
-<body>
 
-  <div class="container">
+{% block title %}Status do Frete — FretesExpress{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/frete_solicitacoes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h2 class="titulo">O seu frete foi solicitado com sucesso!</h2>
     <p class="mensagem">
-      Alertaremos quando um entregador parceiro aceitar realizar a sua entrega!
+        Alertaremos quando um entregador parceiro aceitar realizar a sua entrega!
     </p>
 
     <div class="rodape">
@@ -20,7 +20,9 @@
             <button class="btn-acompanhar">Acompanhar</button>
         </a>
     </div>
-  </div>
+</div>
+{% endblock %}
 
-</body>
-</html>
+{% block extra_js %}
+<!-- Se houver JS específico para esta página, insira aqui -->
+{% endblock %}

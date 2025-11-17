@@ -1,0 +1,51 @@
+{% extends "base_inside.html" %}
+{% load static %}
+
+
+{% block title %}Meus Fretes{% endblock %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/status_frete.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="titulo">Meus Fretes</h1>
+
+<div id="lista-fretes">
+    {% for frete in fretes %}
+    <div class="frete-card">
+
+        <div class="frete-titulo">
+            Frete #{{ frete.id }} - {{ frete.produto }}
+        </div>
+
+        <div class="frete-info">
+            <b>Origem:</b> {{ frete.endereco_coleta }}<br>
+            <b>Destino:</b> {{ frete.endereco_entrega }}<br>
+            <b>Data:</b> {{ frete.data_solicitacao }} às {{ frete.hora_solicitacao }}<br>
+            <b>Peso:</b> {{ frete.peso }} kg
+            {% if frete.status == "aceito" %}
+                <br><b>Freteiro:</b> {{ frete.freteiro.nome }}
+            {% else %}
+                <br><i>Estamos procurando um entregador...</i>
+            {% endif %}
+
+        </div>
+
+        <div class="frete-status status-{{ frete.status|lower }}">
+            {{ frete.status|title }}
+        </div>
+
+        {% if frete.status == "pendente" or frete.status == "aceito" %}
+            <a href="{% url 'status_frete' frete.id %}" class="btnAcompanhar">Acompanhar</a>
+        {% endif %}
+
+    </div>
+    {% empty %}
+        <p>Você ainda não solicitou nenhum frete.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

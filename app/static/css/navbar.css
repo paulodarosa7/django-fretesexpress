@@ -1,0 +1,237 @@
+/* navbar.css - consolidação (use com IDs: #menu-btn, #menu-overlay, #sidebar) */
+
+/* overlay (aparece ao abrir) */
+#menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none; /* controlado por JS */
+  z-index: 998;
+}
+
+/* botão hamburguer (fixo no topo) */
+#menu-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 1001;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #f3c316;
+  cursor: pointer;
+}
+
+/* sidebar (container principal) */
+#sidebar {
+  position: fixed;
+  left: -100%;
+  width: 300px;
+  height: 100vh;
+  background: #242222;
+  color: #fff;
+  padding: 22px;
+  transition: left 0.28s ease, transform 0.28s ease;
+  z-index: 999;
+  box-shadow: 6px 0 20px rgba(0,0,0,0.6);
+
+  /* layout para empurrar footer para baixo */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão voltar dentro do menu */
+#sidebar-back {
+    display: none;
+    color: #f3c316;
+    font-size: 16px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Quando sidebar estiver ativa → exibe o voltar */
+#sidebar.active #sidebar-back {
+    display: block;
+}
+
+
+/* quando ativa (visível) */
+#sidebar.active {
+  left: 0;
+}
+
+/* Logo */
+#sidebar .logo {
+    /* font-family: 'Kaushan Script', cursive; */
+    font-size: 28px;
+    color: #f3c316;
+    margin-bottom: 18px;
+}
+
+/* Parte do usuário */
+#sidebar .user-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+#sidebar .user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar .username {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+#sidebar .editar-info {
+    font-size: 12px;
+    color: #f3c316;
+    text-decoration: none;
+    margin-top: 4px;
+}
+
+/* Avatar */
+#sidebar .user-avatar img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #333;
+    object-fit: cover;
+}
+
+/* Menu lateral */
+#sidebar .menu {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Links do menu */
+#sidebar .menu-item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#sidebar .menu-item .icon {
+    color: #f3c316;
+    font-size: 18px;
+}
+
+#sidebar .menu-item:hover {
+    color: #f3c316;
+}
+
+/* Parte inferior (sempre no rodapé da sidebar) */
+#sidebar .footer-switch {
+    margin-top: auto; /* força ficar no final */
+    padding-top: 16px;
+    text-align: center;
+}
+
+#sidebar .footer-switch a {
+    text-decoration: none;
+    color: #f3c316;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#sidebar .footer-switch a:hover {
+    text-decoration: underline;
+}
+
+/* pequenas responsividades */
+@media (max-width: 480px) {
+  #sidebar {
+    width: 85%;
+    left: -100%;
+  }
+  #sidebar.active { left: 0; }
+}
+
+/* container principal */
+.perfil-container {
+    width: 90%;
+    max-width: 360px;
+    margin: 20px auto;
+    background: #1f1c1d;
+    padding: 25px;
+    border-radius: 25px;
+    color: white;
+    position: relative;
+    /* font-family: 'Poppins', sans-serif; */
+}
+
+/* voltar + foto */
+.topo-perfil {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.voltar {
+    color: #e6c000;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* foto redonda média */
+.foto-perfil {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* nome + editar */
+.info-usuario {
+    margin-top: 15px;
+}
+
+.nome-usuario {
+    font-size: 26px;
+    margin: 0;
+}
+
+.editar-info {
+    color: #e6c000;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+/* itens do menu */
+.menu-perfil {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.item-menu {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.icon-menu {
+    width: 24px;
+    height: 24px;
+}
+
+.sair {
+    color: #f3c316;
+}

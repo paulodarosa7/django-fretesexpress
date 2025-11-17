@@ -1,72 +1,95 @@
-body {
-    background-color: #111;
-    color: #f1c40f;
-    font-family: Arial, sans-serif;
+/* ======== ESTILO GERAL ======== */
+
+body, html {
     margin: 0;
-    padding: 20px;
-}
-
-.container {
-    max-width: 400px;
-    margin: auto;
-}
-
-.titulo {
-    font-size: 22px;
-    margin-bottom: 20px;
-}
-
-.fotoPerfil {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background-color: #333;
-    margin: auto;
-}
-
-.nomeArea {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-.section {
-    margin-top: 25px;
-    border-top: 1px solid #333;
-    padding-top: 20px;
-}
-
-.label {
-    font-size: 13px;
-    color: #bbb;
-}
-
-.row {
+    padding: 0;
+    width: 100%;
+    background-color: #1E1E1E;
+    font-family: 'Kaushan Script', cursive, sans-serif;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 0;
+    justify-content: center;
 }
 
-.valor {
-    color: #fff;
+.perfil-page {
+    width: 90%;
+    max-width: 450px;
+    margin-top: 40px;
+    text-align: center;
 }
 
-.btn-edit {
-    background: none;
+/* ======== TÍTULO ======== */
+.titulo {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 25px;
+    font-family: monospace;
+    text-transform: lowercase;
+}
+
+/* ======== FOTO ======== */
+.avatar img {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f0b400;
+}
+
+/* ======== FORMULÁRIO ======== */
+.form-edit {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* ======== LABELS ======== */
+.label {
+    color: #f0b400;
+    text-align: left;
+    font-family: monospace;
+    font-size: 0.9rem;
+    margin-bottom: -8px;
+}
+
+/* ======== INPUTS ======== */
+.input {
+    padding: 12px;
+    border-radius: 8px;
     border: none;
-    color: #f1c40f;
-    font-size: 18px;
+    outline: none;
+    font-size: 1rem;
+    background: white;
+    width: 100%;
+}
+
+/* ======== BOTÃO SALVAR ======== */
+.btn-salvar {
+    background: #f0b400;
+    padding: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
     cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
 }
 
-.link-acoes {
-    margin-top: 30px;
+.btn-salvar:hover {
+    background: #ffffff;
 }
 
-.link-acoes a {
-    display: block;
-    color: #f1c40f;
+/* ======== LINK VOLTAR ======== */
+.voltar {
+    display: inline-block;
+    margin-top: 20px;
+    color: #f0b400;
     text-decoration: none;
-    margin: 10px 0;
+    font-size: 1rem;
+    font-family: monospace;
+}
+
+.voltar:hover {
+    text-decoration: underline;
 }

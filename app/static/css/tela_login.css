@@ -30,23 +30,33 @@ body, html {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
+  background: #2b2b2b;
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0004;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.toggle button {
+.toggle a {
   flex: 1;
-  padding: 10px;
-  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 8px;
   font-size: 1rem;
   background: #333;
   color: white;
   cursor: pointer;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-.toggle button.active {
+.toggle a.active {
   background: #f0b400;
   color: black;
   font-weight: bold;
-  border-radius: 5px;
+  box-shadow: 0 0 10px #f0b40088;
 }
 
 /* Telas */

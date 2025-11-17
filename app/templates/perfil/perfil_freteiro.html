@@ -1,43 +1,39 @@
+{% extends 'base_inside.html' %}
 {% load static %}
 
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+{% endblock %}
 
+{% block content %}
 <div class="container">
 
     <h2 class="titulo">Perfil</h2>
 
     <div class="fotoPerfil"></div>
 
-    <div class="nomeArea">{{ freteiro.nome }} <span style="color:#bbb;">(freteiro)</span></div>
+    <div class="nomeArea">{{ freteiro.nome }}</div>
 
     <div class="section">
         <div class="label">Dados</div>
 
         <div class="row">
             <span class="valor">Email: {{ freteiro.email }}</span>
-            <a href="{% url 'editar_freteiro_email' %}" class="btnEditar">✏️</a>
         </div>
 
         <div class="row">
             <span class="valor">Telefone: {{ freteiro.telefone }}</span>
-            <a href="{% url 'editar_freteiro_telefone' %}" class="btnEditar">✏️</a>
         </div>
 
         <div class="row">
             <span class="valor">CPF: {{ freteiro.cpf }}</span>
-            <!-- Não editável -->
-        </div>
-
-        <div class="row">
-            <span class="valor">Veículo: {{ freteiro.veiculo }}</span>
-            <a href="{% url 'editar_veiculo' %}" class="btnEditar">✏️</a>
         </div>
     </div>
 
     <div class="section link-acoes">
-        <a href="{% url 'alterar_senha' %}">Alterar senha</a>
-        <a href="{% url 'editar_perfil_freteiro' %}">Editar perfil completo</a>
-        <a href="{% url 'logout' %}">Sair</a>
+        <a href="{% url 'editar_perfil_freteiro' freteiro.id %}">Editar perfil completo</a>
+        <a href="{% url 'welcome_freteiro' %}">voltar</a>
     </div>
 
 </div>
+{% endblock %}

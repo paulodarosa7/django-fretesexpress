@@ -1,0 +1,39 @@
+{% load static %}
+
+<div class="sidebar">
+    <h2 class="logo">FretesExpress</h2>
+
+    <div class="user-section">
+        <div class="user-info">
+            <p class="user-name">{{ request.user.nome }}</p>
+            <a href="{% url 'editar_freteiro' %}" class="editar-info">editar perfil ></a>
+        </div>
+
+        <div class="user-avatar">
+            <img src="{% static 'img/user.png' %}" alt="avatar">
+        </div>
+    </div>
+
+    <nav class="menu">
+        <a href="{% url 'meus_fretes' %}" class="menu-item">
+            <span class="icon">🚚</span> meus fretes
+        </a>
+
+        <a href="{% url 'chat' %}" class="menu-item">
+            <span class="icon">💬</span> chat
+        </a>
+
+        <a href="{% url 'configuracoes' %}" class="menu-item">
+            <span class="icon">⚙️</span> configurações
+        </a>
+
+        <a href="{% url 'logout' %}" class="menu-item">
+            <span class="icon">👤</span> sair
+        </a>
+    </nav>
+        <div class="footer-switch">
+        <a href="{% url 'cadastro_usuario' %}">
+            cadastre-se como um solicitante!
+        </a>
+    </div>
+</div>

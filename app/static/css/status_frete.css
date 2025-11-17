@@ -64,3 +64,104 @@ body {
   font-weight: 500;
   color: #ffc400;
 }
+
+/* meus fretes */
+#lista-fretes {
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.frete-card {
+  background-color: #111;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid #222;
+  text-align: left;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.frete-card:hover {
+  transform: scale(1.01);
+  border-color: #ffc400;
+}
+
+.frete-titulo {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffc400;
+  margin-bottom: 8px;
+}
+
+.frete-info {
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.frete-status {
+  margin-top: 10px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* Status específicos */
+.status-pendente {
+  background-color: #ffc400;
+  color: #000;
+}
+
+.status-aceito {
+  background-color: #00c853;
+  color: white;
+}
+
+.status-entregue {
+  background-color: #0095ff;
+  color: white;
+}
+
+.status-cancelado {
+  background-color: #ff1744;
+  color: white;
+}
+
+.frete-btn {
+  display: inline-block;
+  margin-top: 12px;
+  background-color: #ffc400;
+  color: #000;
+  padding: 6px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.frete-btn:hover {
+  background-color: #e6b200;
+}
+
+.btnAcompanhar {
+    display: block;
+    margin-top: 12px;
+    background-color: #ffc400;
+    color: #000;
+    text-align: center;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.btnAcompanhar:hover {
+    background-color: #e6b000;
+}
+

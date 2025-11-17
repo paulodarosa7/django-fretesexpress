@@ -10,15 +10,19 @@ urlpatterns = [
     path('user/cadastro/', views.cadastro_user, name='cadastro_user'),
     path('user/welcome/', views.welcome_user, name='welcome_user'),
     
+    
+    #NAVBAR USUARIO
     path('user/perfil/<int:id>/', views.perfil_user, name='perfil_user'),
-    # path('user/logout/', views.logout, name='logout'),
+    path('user/perfil/<int:id>/editar/', views.editar_perfil_user, name='editar_perfil_user'),
+    path('user/<int:id>/meus/fretes/', views.fretes_solicitados, name='fretes_solicitados'),
+    
     
     
     #solicitar frete
     # path('user/fretes/historico/', views.fretes_solicitados, name='fretes_solicitados'),
     path('user/<int:id>/fretes/solicitar/', views.solicitar_frete, name='solicitar_frete'),
     path('user/<int:id>/frete/concluido/', views.frete_concluido, name='frete_concluido'),
-    path('user/fretes/status/', views.status_frete, name='status_frete'),
+    path('frete/<int:frete_id>/status/', views.status_frete, name='status_frete'),
 
     # path('user/<int:id>/frete/<int:id>/editar', views.solicitar_frete, name='solicitar_frete'),
 
@@ -30,14 +34,17 @@ urlpatterns = [
     path('motorista/cadastro/', views.cadastro_freteiro, name='cadastro_freteiro'),
     path('motorista/welcome/', views.welcome_freteiro, name='welcome_freteiro'),
     
-    # path('motorista/perfil/<int:id>/', views.perfil_freteiro, name='perfil_freteiro'),
-    # path('motorista/logout/', views.logout, name='logout'),
+    #NAVBAR FRETEIRO
+    path('freteiro/perfil/<int:id>/', views.perfil_freteiro, name='perfil_freteiro'),
+    path('freteiro/perfil/<int:id>/editar/', views.editar_perfil_freteiro, name='editar_perfil_freteiro'),
     
     
     # aceitar frete
     path('motorista/fretes/disponiveis/', views.fretes_disponiveis, name='fretes_disponiveis'),
     path('motorista/frete/<int:frete_id>/aceitar/', views.aceitar_frete, name='aceitar_frete'),
-    path('motorista/fretes/status/', views.status_frete, name='status_frete_freteiro'),
+    path('motorista/fretes/status/<int:frete_id>', views.status_frete, name='status_frete_freteiro'),
+    path('motorista/<int:id>/meus/fretes/', views.fretes_aceitos, name='fretes_aceitos'),
+
     
     # gestão de fretes
     path('fretes/', views.listar_fretes, name='listar_fretes'),
@@ -53,8 +60,9 @@ urlpatterns = [
 
 
 
+    #SAIR
+    path('logout/', views.logout, name='logout'),
 
-    
 
 
 

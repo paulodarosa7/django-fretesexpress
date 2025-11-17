@@ -1,0 +1,78 @@
+/* --- Container Geral --- */
+.perfil-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 10px;
+}
+
+.perfil-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    animation: fadeIn 0.3s ease;
+}
+
+/* --- Título --- */
+.perfil-titulo {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 25px;
+    color: #2d2d2d;
+}
+
+/* --- Inputs / Form --- */
+.perfil-form .form-group {
+    margin-bottom: 20px;
+}
+
+.perfil-form label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.perfil-form input,
+.perfil-form select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+    font-size: 15px;
+    transition: all 0.2s ease;
+}
+
+.perfil-form input:focus,
+.perfil-form select:focus {
+    outline: none;
+    border-color: #1a73e8;
+    box-shadow: 0 0 4px rgba(26,115,232,0.4);
+}
+
+/* --- Botão --- */
+.btn-salvar {
+    width: 100%;
+    background: #1a73e8;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-top: 10px;
+}
+
+.btn-salvar:hover {
+    background: #155fc7;
+}
+
+/* --- Animação --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

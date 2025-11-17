@@ -1,58 +1,56 @@
+{% extends 'base_inside.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Status do Frete — Freteiro</title>
-  <link rel="stylesheet" href="{% static 'css/status_frete.css' %}">
-</head>
-<body>
 
-  <div class="container">
+{% block title %}Status do Frete — Freteiro — FretesExpress{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/status_frete.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
 
     <!-- Topo -->
     <header class="topo">
-      <img src="{% static 'img/voltar.png' %}" class="icone" onclick="history.back()">
-      <h1 class="logo">FretesExpress</h1>
+        <img src="{% static 'img/voltar.png' %}" class="icone" onclick="history.back()">
+        <h1 class="logo">FretesExpress</h1>
     </header>
 
     <!-- Mapa -->
     <div class="mapa">
-      <img src="{% static 'img/mapa_exemplo.png' %}" alt="Mapa do trajeto" class="mapa-img">
-      <div class="trajeto"></div>
+        <img src="{% static 'img/mapa_exemplo.png' %}" alt="Mapa do trajeto" class="mapa-img">
+        <div class="trajeto"></div>
     </div>
 
     <!-- Informações -->
     <div class="info">
-      <p>🟡 Coletar em — {{ frete.endereco_coleta }}</p>
-      <p>⚫ Entregar em — {{ frete.endereco_entrega }}</p>
-      <span class="preco">R$ {{ frete.valor }}</span>
+        <p>📦 Produto — {{ frete.produto }}</p>
+        <p>🟡 Coletar em — {{ frete.endereco_coleta }}</p>
+        <p>⚫ Entregar em — {{ frete.endereco_entrega }}</p>
+        <span class="preco">R$ {{ frete.valor }}</span>
     </div>
 
     <!-- Status -->
     <footer class="rodape">
-
-      {% if frete.status == "pendente" %}
-        <p>⏳ Aguardando você confirmar a retirada.</p>
-
-      {% elif frete.status == "aceito" %}
-        <p>🚚 Você aceitou este frete!</p>
-        <p class="sub">Dirija-se ao ponto de coleta.</p>
-
-      {% elif frete.status == "em_andamento" %}
-        <p>📦 Frete em andamento</p>
-        <p class="sub">Leve o item até o destino indicado.</p>
-
-      {% elif frete.status == "concluido" %}
-        <p>✅ Frete finalizado com sucesso!</p>
-        <p class="sub">Obrigado por trabalhar com a FretesExpress!!!!</p>
-
-      {% else %}
-        <p>ℹ Status desconhecido</p>
-      {% endif %}
-
+        {% if frete.status == "pendente" %}
+            <p>⏳ Aguardando você confirmar a retirada.</p>
+        {% elif frete.status == "aceito" %}
+            <p>🚚 Você aceitou este frete!</p>
+            <p class="sub">Dirija-se ao ponto de coleta.</p>
+        {% elif frete.status == "em_andamento" %}
+            <p>📦 Frete em andamento</p>
+            <p class="sub">Leve o item até o destino indicado.</p>
+        {% elif frete.status == "concluido" %}
+            <p>✅ Frete finalizado com sucesso!</p>
+            <p class="sub">Obrigado por trabalhar com a FretesExpress!!!!</p>
+        {% else %}
+            <p>ℹ Status desconhecido</p>
+        {% endif %}
     </footer>
-  </div>
 
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- JS específico desta página, se houver -->
+{% endblock %}

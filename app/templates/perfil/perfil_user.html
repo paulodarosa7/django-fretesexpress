@@ -1,7 +1,11 @@
+{% extends 'base_inside.html' %}
 {% load static %}
 
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/perfil.css' %}">
+{% endblock %}
 
+{% block content %}
 <div class="container">
 
     <h2 class="titulo">Perfil</h2>
@@ -15,24 +19,21 @@
 
         <div class="row">
             <span class="valor">Email: {{ usuario.email }}</span>
-            <a href="{% url 'editar_email' %}" class="btnEditar">✏️</a>
         </div>
 
         <div class="row">
             <span class="valor">Telefone: {{ usuario.telefone }}</span>
-            <a href="{% url 'editar_telefone' %}" class="btnEditar">✏️</a>
         </div>
 
         <div class="row">
             <span class="valor">CPF: {{ usuario.cpf }}</span>
-            <!-- Não editável -->
         </div>
     </div>
 
     <div class="section link-acoes">
-        <a href="{% url 'alterar_senha' %}">Alterar senha</a>
-        <a href="{% url 'editar_perfil' %}">Editar perfil completo</a>
-        <a href="{% url 'logout' %}">Sair</a>
+        <a href="{% url 'editar_perfil_user' usuario.id %}">Editar perfil completo</a>
+        <a href="{% url 'welcome_user' %}">voltar</a>
     </div>
 
 </div>
+{% endblock %}

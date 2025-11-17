@@ -1,73 +1,74 @@
+{% extends 'base.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FretesExpress - Cadastro Freteiro</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
-</head>
-<body>
-  <div class="container">
+
+{% block title %}Cadastro Freteiro — FretesExpress{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1 class="logo">FretesExpress</h1>
 
     <form id="formCadastro" action="{% url 'cadastro_freteiro' %}" method="POST" class="cadastroTela" enctype="multipart/form-data">
-      {% csrf_token %}
+        {% csrf_token %}
 
-      <!-- Tela 1 -->
-      <div id="telaCadastro1">
-        <p class="title">cadastre-se</p>
-        <input name="nome" type="text" placeholder="nome" required>
-        <input name="email" type="email" placeholder="email" required>
-        <input type="email" placeholder="confirme seu email" required>
-        <input name="tel" type="text" placeholder="número de telefone" maxlength="11" required>
-        <input name="cpf" type="text" placeholder="cpf" maxlength="14" required>
-        <input name="senha" type="password" placeholder="senha" required>
-        <input type="password" placeholder="confirme sua senha" required>
+        <!-- Tela 1 -->
+        <div id="telaCadastro1">
+            <p class="title">cadastre-se</p>
+            <input name="nome" type="text" placeholder="nome" required>
+            <input name="email" type="email" placeholder="email" required>
+            <input type="email" placeholder="confirme seu email" required>
+            <input name="tel" type="text" placeholder="número de telefone" maxlength="11" required>
+            <input name="cpf" type="text" placeholder="cpf" maxlength="14" required>
+            <input name="senha" type="password" placeholder="senha" required>
+            <input type="password" placeholder="confirme sua senha" required>
 
-        <p class="title">insira sua data de nascimento</p>
-        <div class="aniversario">
-          <input name="dia" type="text" placeholder="dia" maxlength="2" required>
-          <input name="mes" type="text" placeholder="mês" maxlength="2" required>
-          <input name="ano" type="text" placeholder="ano" maxlength="4" required>
+            <p class="title">insira sua data de nascimento</p>
+            <div class="aniversario">
+                <input name="dia" type="text" placeholder="dia" maxlength="2" required>
+                <input name="mes" type="text" placeholder="mês" maxlength="2" required>
+                <input name="ano" type="text" placeholder="ano" maxlength="4" required>
+            </div>
+
+            <!-- Botão continua tela 2 -->
+            <button type="button" id="btnContinuar">continuar</button>
+            <a href="{% url 'cadastro_user' %}" class="cadastro_user">cadastre-se como um solicitante</a>
         </div>
 
-        <!-- Botão continua tela 2 -->
-        <button type="button" id="btnContinuar">continuar</button>
-        <a href="{% url 'cadastro_user' %}" class="cadastro_user">cadastre-se como um solicitante</a>
-      </div>
+        <!-- Tela 2 -->
+        <div id="telaCadastro2" class="hidden">
+            <p class="title">complete seu cadastro</p>
+            <input name="cidade" type="text" placeholder="cidade" required>
+            <input name="estado" type="text" placeholder="estado" required>
 
-      <!-- Tela 2 -->
-      <div id="telaCadastro2" class="hidden">
-        <p class="title">complete seu cadastro</p>
-        <input name="cidade" type="text" placeholder="cidade" required>
-        <input name="estado" type="text" placeholder="estado" required>
+            <p class="subtitle">documentos obrigatórios:</p>
+            <ul class="docs-list">
+                <li>CNH</li>
+                <li>CRLV</li>
+                <li>Comprovante de Residência</li>
+            </ul>
 
-        <p class="subtitle">documentos obrigatórios:</p>
-        <ul class="docs-list">
-          <li>CNH</li>
-          <li>CRLV</li>
-          <li>Comprovante de Residência</li>
-        </ul>
+            <div class="anexar">
+                <label for="cnh">Anexar CNH</label>
+                <input type="file" id="cnh" name="cnh" accept=".pdf,.jpg,.png">
 
-        <div class="anexar">
-          <label for="cnh">Anexar CNH</label>
-          <input type="file" id="cnh" name="cnh" accept=".pdf,.jpg,.png">
+                <label for="crlv">Anexar CRLV</label>
+                <input type="file" id="crlv" name="crlv" accept=".pdf,.jpg,.png">
 
-          <label for="crlv">Anexar CRLV</label>
-          <input type="file" id="crlv" name="crlv" accept=".pdf,.jpg,.png">
+                <label for="residencia">Anexar Comprovante de Residência</label>
+                <input type="file" id="residencia" name="residencia" accept=".pdf,.jpg,.png">
+            </div>
 
-          <label for="residencia">Anexar Comprovante de Residência</label>
-          <input type="file" id="residencia" name="residencia" accept=".pdf,.jpg,.png">
+            <p class="aviso"><b>seus documentos passarão por análise. o retorno é de até 7 dias.</b></p>
+            <button type="submit" id="btnEntrarFreteiro">partiu entrega!</button>
         </div>
-
-        <p class="aviso"><b>seus documentos passarão por análise. o retorno é de até 7 dias.</b></p>
-        <button type="submit" id="btnEntrarFreteiro">partiu entrega!</button>
-      </div>
 
     </form>
-  </div>
+</div>
+{% endblock %}
 
-  <script src="{% static 'js/cadastro_freteiro.js' %}"></script>
-</body>
-</html>
+{% block extra_js %}
+<script src="{% static 'js/cadastro_freteiro.js' %}"></script>
+{% endblock %}

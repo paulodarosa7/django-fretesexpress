@@ -1,47 +1,40 @@
+{% extends 'base_inside.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Fretes Disponíveis</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/fretes_disponiveis.css' %}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+{% block title %}Fretes Disponíveis — FretesExpress{% endblock %}
 
-<body>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/fretes_disponiveis.css' %}">
+{% endblock %}
 
-    <!-- Topo -->
-    <div class="topbar">
-        <img src="{% static 'img/notif_icon.png' %}" class="icone-sino">
-        <h1 class="logo">FretesExpress</h1>
-    </div>
+{% block content %}
+<!-- Topo -->
+<div class="topbar">
+    <h1 class="logo">FretesExpress</h1>
+</div>
 
-    <div class="container">
+<div class="container">
+    <h2>Fretes Disponíveis</h2>
 
-        <h2>Fretes Disponíveis</h2>
+    {% if fretes %}
+        {% for frete in fretes %}
+            <div class="card-frete">
+                <h3>{{ frete.produto }}</h3>
+                <p><strong>Origem:</strong> {{ frete.endereco_coleta }}</p>
+                <p><strong>Destino:</strong> {{ frete.endereco_entrega }}</p>
+                <p><strong>Valor:</strong> R$ {{ frete.valor }}</p>
 
-        {% if fretes %}
-            {% for frete in fretes %}
-                <div class="card-frete">
+                <a href="{% url 'aceitar_frete' frete.id %}" class="btnAceitar">
+                    Aceitar Frete
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="nenhum">Nenhum frete encontrado no momento...</p>
+    {% endif %}
+</div>
+{% endblock %}
 
-                    <h3>{{ frete.produto }}</h3>
-
-                    <p><strong>Origem:</strong> {{ frete.endereco_coleta }}</p>
-                    <p><strong>Destino:</strong> {{ frete.endereco_entrega }}</p>
-                    <p><strong>Valor:</strong> R$ {{ frete.valor }}</p>
-
-                    <a href="{% url 'aceitar_frete' frete.id %}" class="btnAceitar">
-                        Aceitar Frete
-                    </a>
-
-                </div>
-            {% endfor %}
-        {% else %}
-            <p class="nenhum">Nenhum frete encontrado no momento...</p>
-        {% endif %}
-
-    </div>
-
-</body>
-</html>
+{% block extra_js %}
+<!-- Se houver JS específico para essa página, insira aqui -->
+{% endblock %}

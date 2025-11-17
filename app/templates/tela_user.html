@@ -1,36 +1,39 @@
+{% extends 'base.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FretesExpress</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/tela_login.css' %}">
-</head>
-<body>
-  <div class="container">
+{% block title %}Login — FretesExpress{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tela_login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
     <h1 class="logo">FretesExpress</h1>
 
-  <div class="toggle">
-      <a href="{% url 'login_user' %}" class="{% if active == 'usuario' %}active{% endif %}" id="btnUsuario">usuário</a>
-      <a href="{% url 'login_freteiro' %}" class="{% if active == 'motorista' %}active{% endif %}" id="btnMotorista">motorista</a>
-  </div>
+    <div class="toggle">
+        <a href="{% url 'login_user' %}" class="{% if active == 'usuario' %}active{% endif %}" id="btnUsuario">usuário</a>
+        <a href="{% url 'login_freteiro' %}" class="{% if active == 'motorista' %}active{% endif %}" id="btnMotorista">motorista</a>
+    </div>
 
     <form action="{% url 'login_user' %}" method="POST">
-      {% csrf_token %}
+        {% csrf_token %}
+            
         <div id="usuarioTela" class="loginTela">
-          <p class="title">painel de bordo</p>
-          <input name="email" type="email" placeholder="e-mail">
-          <input name="senha" type="password" placeholder="senha">
-          <button class="btnInicio" type="submit">acessar</button>
+            <p class="title">painel de bordo</p>
 
-          <a href="{% url 'cadastro_user' %}" class="cadastro_usuario">cadastre-se</a>
-          <a href="{% url 'cadastro_freteiro' %}" class="cadastro_freteiro">torne-se um freteiro!</a>
+            <input name="email" type="email" placeholder="e-mail">
+            <input name="senha" type="password" placeholder="senha">
+
+            <button class="btnInicio" type="submit">acessar</button>
+
+            <a href="{% url 'cadastro_user' %}" class="cadastro_usuario">cadastre-se</a>
+            <a href="{% url 'cadastro_freteiro' %}" class="cadastro_freteiro">torne-se um freteiro!</a>
         </div>
-    </form> 
-  </div>
+    </form>
+</div>
+{% endblock %}
 
-  <script src="{% static 'js/tela_inicio.js' %}"></script>
-</body>
-</html>
+{% block extra_js %}
+<script src="{% static 'js/tela_inicio.js' %}"></script>
+{% endblock %}

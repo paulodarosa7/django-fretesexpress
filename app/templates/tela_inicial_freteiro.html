@@ -1,44 +1,39 @@
+{% extends 'base_inside.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>FretesExpress - Freteiro</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/tela_inicial.css' %}">
+{% block title %}Freteiro — FretesExpress{% endblock %}
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-</head>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tela_inicial.css' %}">
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      crossorigin=""/>
+{% endblock %}
 
-<body>
+{% block content %}
+<!-- Topo -->
+<div class="topbar">
+    <h1 class="logo">FretesExpress</h1>
+</div>
 
-  <!-- Topo -->
-  <div class="topbar">
-      <img src="{% static 'img/notif_icon.png' %}" alt="Notificações" class="icone-sino">
-      <h1 class="logo">FretesExpress</h1>
-  </div>
+<div class="container">
+    <div class="acao">
+        <a href="{% url 'fretes_disponiveis' %}">
+            <button class="btnSolicitar">Ver fretes disponíveis</button>
+        </a>
+    </div>
 
-  <div class="container">
+    <!-- Mapa -->
+    <div id="map" class="map-container"></div>
 
-      <h2>Fretes próximos de você</h2>
+    <!-- Botão para ver fretes -->
+    {% comment %} <a href="{% url 'fretes_disponiveis' %}" class="btnFretes">
+        Ver fretes disponíveis
+    </a> {% endcomment %}
+</div>
+{% endblock %}
 
-      <!-- Mapa -->
-      <div id="map" class="map-container"></div>
-
-      <!-- Botão para ver fretes -->
-      <a href="{% url 'fretes_disponiveis' %}" class="btnFretes">
-          Ver fretes disponíveis
-      </a>
-
-  </div>
-
-  <!-- Leaflet -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-
-  <script src="{% static 'js/tela_inicial.js' %}"></script>
-
-</body>
-</html>
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="{% static 'js/tela_inicial.js' %}"></script>
+{% endblock %}

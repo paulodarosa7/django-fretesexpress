@@ -1,0 +1,77 @@
+{% load static %}
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}FretesExpress{% endblock %}</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- 🔥 BOTÃO HAMBÚRGUER -->
+    <button id="menu-btn" class="hamburger">☰</button>
+    <div id="sidebar-back">← voltar</div>
+
+
+    <!-- 🔥 SIDEBAR -->
+    <div id="sidebar">
+        <div class="user-section">
+            <div class="user-info">
+            {% if request.session.usuario_id %}
+                <p class="username">{{ usuario.nome }}</p>
+                <a class="editar-info" href="{% url 'perfil_user' request.session.usuario_id %}">Editar perfil</a>
+            {% elif request.session.freteiro_id %}
+                <p class="username">{{ freteiro.nome }}</p>
+                <a class="editar-info" href="{% url 'perfil_freteiro' request.session.freteiro_id %}">Editar perfil</a>
+            {% endif %}
+                {% comment %} <a class="editar-info" href="{% url 'perfil_user' usuario.id %}">Editar perfil</a> {% endcomment %}
+            </div>
+
+            <div class="user-avatar">
+                <img src="https://via.placeholder.com/60">
+            </div>
+        </div>
+
+
+
+            {% if request.session.usuario_id %}
+                <a href="{% url 'welcome_user' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
+                <a href="{% url 'fretes_solicitados' request.session.usuario_id %}" class="menu-item">
+                    <span class="icon">🚚</span> Meus Fretes</a>
+            {% elif request.session.freteiro_id %}
+                <a href="{% url 'welcome_user' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
+                <a href="{% url 'fretes_aceitos' request.session.freteiro_id %}" class="menu-item">
+                    <span class="icon">🚚</span> Meus Fretes</a>
+            {% endif %}           
+             <a href="{% url 'logout' %}" id="sair" class="menu-item"><span class="icon">⚙️</span> <b>Sair</b></a>
+        </div>
+
+{% comment %} 
+        {% elif request.session.usuario_id %}
+            <div class="footer-switch">
+                <a href="#">torne-se um freteiro!</a>
+            </div>
+        {% endif %}   {% endcomment %}
+ 
+    </div>
+
+    <!-- 🔥 OVERLAY -->
+    <div id="menu-overlay"></div>
+
+    <!-- 🔥 CONTEÚDO DA PÁGINA -->
+    <main style="padding-top: 70px;">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{% static 'js/navbar.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

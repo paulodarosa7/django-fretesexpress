@@ -1,51 +1,30 @@
+{% extends 'base_inside.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-  <title>FretesExpress - Welcome</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
+{% block title %}Bem-vindo — FretesExpress{% endblock %}
 
-</head>
-<body>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+{% endblock %}
 
+{% block content %}
 
-    
-  <!-- Topo -->
-  <div class="topbar">
-    <img src="img/notif_icon.png" alt="Notificações" class="icone-sino">
+<div class="topbar">
     <h1 class="logo">FretesExpress</h1>
-  </div>
+</div>
 
-  <div class="acao">
-        <a href="{% url 'solicitar_frete' id=usuario.id %}">
-          <button class="btnSolicitar">solicitar frete</button>
-        </a>
-  </div>
-      <!-- Botão localização
-      <div class="gps">
-          <img src="img/icone_gps.png" alt="GPS" class="icone-gps">
-      </div> -->
-      
-      <div id="map" style="height: 400px; margin-top: 20px;"></div>
-    </div>
-   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+<div class="acao">
+    <a href="{% url 'solicitar_frete' id=usuario.id %}">
+        <button class="btnSolicitar">solicitar frete</button>
+    </a>
+</div>
 
-     <!-- Make sure you put this AFTER Leaflet's CSS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
-  
+<div id="map" style="height: 400px; margin-top: 20px;"></div>
 
-     
-  {% comment %} <script src="cordova.js"></script>
-  <script src="js/tela_inicial.js"></script> {% endcomment %}
+{% endblock %}
 
-  
-</body>
-</html>
+{% block extra_js %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{% static 'js/tela_inicial.js' %}"></script>
+{% endblock %}

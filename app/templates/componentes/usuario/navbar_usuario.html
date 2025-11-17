@@ -1,0 +1,29 @@
+{% comment %} {% comment %} {% load static %}
+
+<!-- overlay para clicar fora e fechar -->
+<div id="menu-overlay" class="menu-overlay" aria-hidden="true"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar" class="sidebar" role="navigation" aria-hidden="true">
+  <h2 class="logo">FretesExpress</h2>
+
+  <div class="user-section">
+    <div class="user-info">
+      <p class="user-name">{{ request.user.nome }}</p>
+      {% comment %} <a href="{% url 'editar_perfil_user' %}" class="editar-info">editar minhas informações &gt;</a> {% endcomment %}
+    {% comment %} </div>
+
+    <div class="user-avatar">
+      <img src="{% static 'img/user.png' %}" alt="avatar">
+    </div>
+  </div>
+
+  <nav class="menu">
+    {% comment %} <a href="{% url 'historico_user' %}" class="menu-item">📒 histórico</a> {% endcomment %}
+    {% comment %} <a href="{% url 'logout' %}" class="menu-item">👤 sair</a>
+  </nav>
+
+  <div class="footer-switch">
+    <a href="{% url 'cadastro_freteiro' %}">torne-se um freteiro!</a>
+  </div>
+</aside> {% endcomment %} 

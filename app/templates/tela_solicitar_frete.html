@@ -1,55 +1,46 @@
-
+{% extends 'base.html' %}
 {% load static %}
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>FretesExpress - Solicitar Frete</title>
-<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
+{% block title %}Solicitar Frete — FretesExpress{% endblock %}
+
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
-</head>
-<body>
+{% endblock %}
 
-
+{% block content %}
 <div class="container">
+    <h1 class="logo">FretesExpress</h1>
 
+    <form action="{% url 'solicitar_frete' id=usuario.id %}" method="POST">
+        {% csrf_token %}
 
-<h1 class="logo">FretesExpress</h1>
+        <p class="title">detalhes do frete:</p>
+        <input name="produto" type="text" placeholder="o que é?">
+        <input name="peso" type="text" placeholder="peso">
 
-<form action="{% url 'solicitar_frete' id=usuario.id %}" method="POST">
-    {% csrf_token %}
+        <p class="title">medidas:</p>
+        <div class="aniversario">
+            <input name="largura" type="text" placeholder="largura">
+            <input name="altura" type="text" placeholder="altura">
+        </div>
 
-    <p class="title">detalhes do frete:</p>
-    <input name="produto" type="text" placeholder="o que é?">
-    <input name="peso" type="text" placeholder="peso">
+        <input name="valor" type="text" placeholder="valor do item">
+        <input name="endereco_coleta" type="text" placeholder="endereço de origem">
+        <input name="endereco_entrega" type="text" placeholder="endereço de destino">
 
+        <p class="title">Data e hora da entrega</p>
+        <div class="aniversario">
+            <input name='dia' type="text" placeholder="dia">
+            <input name='mes' type="text" placeholder="mês">
+            <input name='ano' type="text" placeholder="ano">
+        </div>
+        <input name="hora" type="text" placeholder="hora" style="margin-top:10px; text-align:center;">
 
-    <p class="title">medidas: </p>
-    <div class="aniversario">
-    <input name="largura" type="text" placeholder="largura">
-    <input name="altura" type="text" placeholder="altura">
-    </div>
-
-
-    <input name="valor" type="text" placeholder="valor do item">
-    <input name="endereco_coleta" type="text" placeholder="endereço de origem">
-    <input name="endereco_entrega" type="text" placeholder="endereço de destino">
-
-
-    <p class="title">Data e hora da entrega</p>
-    <div class="aniversario">
-    <input name='dia' type="text" placeholder="dia">
-    <input  name='mes' type="text" placeholder="mês">
-    <input  name='ano' type="text" placeholder="ano">
-    </div>
-    <input name="hora" type="text" placeholder="hora" style="margin-top:10px; text-align:center;">
-
-
-    <button>concluir</button>
-</form>
-
+        <button type="submit">concluir</button>
+    </form>
 </div>
+{% endblock %}
 
-
-</body>
-</html>
+{% block extra_js %}
+<!-- JS específico desta página, se houver -->
+{% endblock %}
