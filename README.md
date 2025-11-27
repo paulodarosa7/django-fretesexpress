@@ -31,7 +31,7 @@ Mapbox → Responsável por realizar o _autocomplete_ do endereço passado pelo 
 * 🔑 **Tela de login e cadastro** para solicitantes e motoristas.
 * 📱 **Telas principais já criadas** para interação do usuário.
 * 🗺️ **Geolocalização em tempo real**, utilizando a API open-source [Leaflet](https://leafletjs.com/), que permite visualizar a localização aproximada e exata do smartphone diretamente no mapa.
-*  **Traçar rotas entre dois endereços**, utilizando a API do [Mapbox](https://www.mapbox.com/), que permite entregar os endereços, utilizando geolocalização reversa, para o sistema e utilizamos o Leaflet Open Route Machine para traçar a rota entre dois pontos no mapa, calculando tempo e distância.
+* 🛣 **Traçar rotas entre dois endereços**, utilizando a API do [Mapbox](https://www.mapbox.com/), que permite entregar os endereços, utilizando geolocalização reversa, para o sistema e utilizamos o Leaflet Open Route Machine para traçar a rota entre dois pontos no mapa, calculando tempo e distância.
 * 🎨 **Interface responsiva e otimizada** para dispositivos móveis, garantindo boa experiência tanto em smartphones quanto em tablets.
 * 📑 **Navbar interativa** com os menus de edição de perfil, início (redireciona a página incial) meus fretes (fretes solicitados e disponíveis) e logout.
 * 📤 **Solicitação de Fretes** com API do Mapbox para autocompletar endereços e realizar o traçado da rota, o usuário insere os dados e salva no banco de dados, calculando o preço da entrega e enviando aos freteiros.
