@@ -11,12 +11,17 @@ Além disso, o **FretesExpress** abre espaço para **MEIs, autônomos e profissi
 ## 📱 Tecnologias Utilizadas
 
 _Removido por enquanto: Apache Cordova → para empacotar o código web em aplicativo mobile._
+
 _Removido por enquanto: Android Studio → utilizado como emulador e ambiente de testes._
 
 HTML5, CSS3 e JavaScript → responsáveis pela interface e lógica da aplicação.
+
 Django/Python → Responsável pelo backend e as rotas do aplicativo.
+
 SQLite → até o momento será o banco de dados utilizado.
+
 LEAFLET → Responsável pela coleta da geolocalização.
+
 Mapbox → Responsável por traçar a rota entre dois pontos (caminho do frete).
 
 ---
