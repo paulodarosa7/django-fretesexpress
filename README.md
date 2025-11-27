@@ -33,7 +33,8 @@ Mapbox → Responsável por traçar a rota entre dois pontos (caminho do frete).
 * 🔄 **Opção para editar e cancelar fretes** exclusivamente para os solicitantes.
 * 💱 **Cálculo de rotas** utilizando propriedades de entrega da ANTT (Agência Nacional de Transportes Terrestres).
 * 🔏 **Opção para desenvolvedores** manipular dados do banco de dados.
- 
+
+
 ---
 
 ## 🛠️ Status do Projeto
