@@ -20,5 +20,4 @@ class SolicitarFreteAdmin(admin.ModelAdmin):
     search_fields = ('produto', 'usuario__nome', 'freteiro__nome', 'status', 'endereco_coleta', 'endereco_entrega')
     list_filter = ('status', 'data_solicitacao')
 
-
-#matar sessões?
+    
