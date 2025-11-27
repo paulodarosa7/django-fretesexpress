@@ -37,7 +37,7 @@ Mapbox → Responsável por realizar o _autocomplete_ do endereço passado pelo 
 * 📤 **Solicitação de Fretes** com API do Mapbox para autocompletar endereços e realizar o traçado da rota, o usuário insere os dados e salva no banco de dados, calculando o preço da entrega e enviando aos freteiros.
 * 📥 **Recebimento de Fretes** para os freteiros cadastrados, na qual existe uma lista com todos os fretes solicitados e o freteiro escolhe aceitá-lo e depois poderá recusá-lo.
 * 🔄 **Opção para editar e cancelar fretes** exclusivamente para os solicitantes.
-* 💱 **Cálculo de rotas** utilizando propriedades de entrega da ANTT (Agência Nacional de Transportes Terrestres).
+* 💱 **Cálculo do preço para as rotas** utilizando propriedades de entrega da ANTT (Agência Nacional de Transportes Terrestres).
 * 🔏 **Opção para desenvolvedores** manipular dados do banco de dados.
 
 
