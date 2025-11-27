@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/frete_solicitacoes.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -14,12 +16,17 @@
         Alertaremos quando um entregador parceiro aceitar realizar a sua entrega!
     </p>
 
-    <div class="rodape">
+        <div class="rodape">
         <p class="texto-rodape">Acompanhe seu frete!</p>
-        <a href="{% url 'status_frete' %}">
-            <button class="btn-acompanhar">Acompanhar</button>
-        </a>
+        {% if frete %}
+            <a href="{% url 'status_frete' frete.id %}">
+                <button class="btn-acompanhar">Acompanhar</button>
+            </a>
+        {% else %}
+            <p>Nenhum frete encontrado.</p>
+        {% endif %}
     </div>
+
 </div>
 {% endblock %}
 

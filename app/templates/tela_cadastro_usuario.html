@@ -5,13 +5,15 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <h1 class="logo">FretesExpress</h1>
 
-    <form action="{% url 'cadastro_user' %}" class="cadastroTela" method="POST">
+    <form action="{% url 'cadastro_user' %}" class="cadastroTela usuario" method="POST">
         {% csrf_token %}
         <p class="title">cadastre-se</p>
 

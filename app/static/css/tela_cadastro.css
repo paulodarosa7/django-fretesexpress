@@ -58,12 +58,88 @@ font-size: 1rem;
 background: white;
 }
 
+/* .cadastroTela {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+} */
+
+/* Cadastro usuário: grid no formulário */
+.cadastroTela.usuario {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Cadastro freteiro: grid só nas telas visíveis */
+#telaCadastro1:not(.hidden),
+#telaCadastro2:not(.hidden) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Ocultar telas do freteiro */
+.hidden {
+    display: none !important;
+}
+
+
+
+/* inputs ocupam toda a coluna */
+.cadastroTela input,
+#telaCadastro1 input,
+#telaCadastro2 input {
+    width: 100%;
+}
+
+/* campo nome ocupa duas colunas */
+input[name="nome"] {
+    grid-column: 1 / 3;
+}
+
+/* títulos ocupam duas colunas */
+.title {
+    grid-column: 1 / 3;
+}
+
+/* aniversário */
+.aniversario {
+    grid-column: 1 / 3;
+    display: flex;
+    gap: 10px;
+}
+
+/* botão ocupa toda a largura */
+button {
+    grid-column: 1 / 3;
+    width: 100%;
+}
+
+/* ajuste da subtitle na tela 2 (não ocupar 2 colunas) */
+.subtitle {
+    grid-column: 1 / 3;
+}
+
+/* lista de documentos também ocupa toda a largura */
+.docs-list {
+    grid-column: 1 / 3;
+}
+
+/* anexar arquivos ocupa toda a largura */
+.anexar {
+    grid-column: 1 / 3;
+}
+
+
 /* Data de nascimento (linha com 3 inputs pequenos) */
 .aniversario {
   display: flex;
   gap: 10px;
   justify-content: space-between;
 }
+
+
 
 .aniversario input {
 flex: 1;
@@ -73,6 +149,8 @@ text-align: center;
 
 /* Botões */
 button {
+grid-column: 1 / 3;
+width: 100%;
 background: #f0b400;
 padding: 12px;
 font-size: 1.1rem;

@@ -16,41 +16,61 @@
 
 <body>
 
-    <!-- 🔥 BOTÃO HAMBÚRGUER -->
     <button id="menu-btn" class="hamburger">☰</button>
     <div id="sidebar-back">← voltar</div>
 
 
-    <!-- 🔥 SIDEBAR -->
     <div id="sidebar">
         <div class="user-section">
             <div class="user-info">
             {% if request.session.usuario_id %}
                 <p class="username">{{ usuario.nome }}</p>
-                <a class="editar-info" href="{% url 'perfil_user' request.session.usuario_id %}">Editar perfil</a>
+                <a class="editar-info" href="{% url 'perfil_user' request.session.usuario_id %}">Editar perfil ></a>
             {% elif request.session.freteiro_id %}
                 <p class="username">{{ freteiro.nome }}</p>
-                <a class="editar-info" href="{% url 'perfil_freteiro' request.session.freteiro_id %}">Editar perfil</a>
+                <a class="editar-info" href="{% url 'perfil_freteiro' request.session.freteiro_id %}">Editar perfil ></a>
             {% endif %}
                 {% comment %} <a class="editar-info" href="{% url 'perfil_user' usuario.id %}">Editar perfil</a> {% endcomment %}
             </div>
 
             <div class="user-avatar">
-                <img src="https://via.placeholder.com/60">
-            </div>
+                {% if request.session.usuario_id %}
+                    <img src="{{ usuario.foto_perfil.url }}" alt="Foto" width="150">
+                {% elif request.session.freteiro_id %}
+                    <img src="{{ freteiro.foto_perfil.url }}" alt="Foto" width="150">
+                {% endif %}
+            </div> 
         </div>
 
 
             {% if request.session.usuario_id %}
-                <a href="{% url 'welcome_user' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
+                <a href="{% url 'welcome_user' %}" class="menu-item">
+                    <span class="icon">
+                        <img src="{% static 'img/home.png' %}" alt="Início" class="icon-img">
+                    </span> Início</a>
                 <a href="{% url 'fretes_solicitados' request.session.usuario_id %}" class="menu-item">
-                    <span class="icon">🚚</span> Meus Fretes</a>
+                    <span class="icon">
+                    <img src="{% static 'img/pickup.png' %}" alt="Meus Fretes" class="icon-img">
+
+                    </span> Meus Fretes</a>
             {% elif request.session.freteiro_id %}
-                <a href="{% url 'welcome_freteiro' %}" class="menu-item"><span class="icon">🏡</span> Início</a>
+                    <!-- botão incio -->
+                <a href="{% url 'welcome_freteiro' %}" class="menu-item">
+                    <span class="icon">
+                        <img src="{% static 'img/home.png' %}" alt="Início" class="icon-img">
+                    </span> Início</a>
+
+
+                    <!-- botão meus fretes -->
                 <a href="{% url 'fretes_aceitos' request.session.freteiro_id %}" class="menu-item">
-                    <span class="icon">🚚</span> Meus Fretes</a>
+                    <span class="icon">
+                        <img src="{% static 'img/pickup.png' %}" alt="Meus Fretes" class="icon-img">
+                    </span>Meus Fretes</a>
             {% endif %}           
-             <a href="{% url 'logout' %}" id="sair" class="menu-item"><span class="icon">⚙️</span> <b>Sair</b></a>
+             <a href="{% url 'logout' %}" id="sair" class="menu-item">
+                <span class="icon">
+                        <img src="{% static 'img/logout.png' %}" alt="Sair" class="icon-img">
+                    </span> <b>Sair</b></a>
         </div>
 
 {% comment %} 

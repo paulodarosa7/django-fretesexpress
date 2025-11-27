@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/tela_cadastro.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -19,11 +21,11 @@
             <p class="title">cadastre-se</p>
             <input name="nome" type="text" placeholder="nome" required>
             <input name="email" type="email" placeholder="email" required>
-            <input type="email" placeholder="confirme seu email" required>
+            <input name="confirmar_email" type="email" placeholder="confirme seu email" required>
             <input name="tel" type="text" placeholder="número de telefone" maxlength="11" required>
             <input name="cpf" type="text" placeholder="cpf" maxlength="14" required>
             <input name="senha" type="password" placeholder="senha" required>
-            <input type="password" placeholder="confirme sua senha" required>
+            <input name="confirmar_senha" type="password" placeholder="confirme sua senha" required>
 
             <p class="title">insira sua data de nascimento</p>
             <div class="aniversario">
@@ -31,6 +33,10 @@
                 <input name="mes" type="text" placeholder="mês" maxlength="2" required>
                 <input name="ano" type="text" placeholder="ano" maxlength="4" required>
             </div>
+
+            {% if erro %}
+                <p id="erroBack" class="erro">{{ erro }}</p>
+            {% endif %}
 
             <!-- Botão continua tela 2 -->
             <button type="button" id="btnContinuar">continuar</button>

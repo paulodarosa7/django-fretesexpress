@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Solicitar Frete — FretesExpress{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/solicitar_frete.css' %}">
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.17.0/mapbox-gl.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css' rel='stylesheet' />
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="logo">FretesExpress</h1>
+
+    <form action="{% url 'editar_frete' frete.id %}" method="POST">
+        {% csrf_token %}
+
+        <p class="title">Detalhes do frete:</p>
+
+        <input name="produto" type="text" value="{{ frete.produto }}" placeholder="o que é?" required>
+        <div class="input-sufixo">
+            <input name="peso" type="text" value="{{ frete.peso }}" placeholder="peso" required>
+            <span>kg</span>
+        </div>
+
+        <p class="title">Medidas:</p>
+
+        <div class="aniversario">
+            <div class="input-sufixo">
+                <input type="text" name="largura" value="{{ frete.largura }}" placeholder="largura" required>
+                <span>cm</span>
+            </div>
+
+            <div class="input-sufixo">
+                <input type="text" name="altura" value="{{ frete.altura }}" placeholder="altura" required>
+                <span>cm</span>
+            </div>
+        </div>
+
+        <div class="input-prefixo">
+            <span>R$</span>
+            <input type="text" name="valor" value="{{ frete.valor }}" placeholder="valor do item" required>
+        </div>
+
+        <!-- ENDEREÇO COLETA -->
+        <div style="position: relative; width: 100%; margin-bottom: 10px;">
+            <input
+                type="text"
+                id="endereco_coleta"
+                name="endereco_coleta"
+                value="{{ frete.endereco_coleta }}"
+                placeholder="Digite o endereço de origem"
+                autocomplete="off"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: none;"
+                required
+            />
+            <div id="autocomplete-list-coleta"
+                style="position: absolute; background: white; width: 100%; max-height: 200px;
+                overflow-y: auto; border: 1px solid #ccc; z-index: 999;">
+            </div>
+        </div>
+
+        <!-- ENDEREÇO ENTREGA -->
+        <div style="position: relative; width: 100%; margin-bottom: 10px;">
+            <input
+                type="text"
+                id="endereco_entrega"
+                name="endereco_entrega"
+                value="{{ frete.endereco_entrega }}"
+                placeholder="Digite o endereço de destino"
+                autocomplete="off"
+                style="width: 100%; padding: 12px; border-radius: 8px; border: none;"
+                required
+            />
+            <div id="autocomplete-list-entrega"
+                style="position: absolute; background: white; width: 100%; max-height: 200px;
+                overflow-y: auto; border: 1px solid #ccc; z-index: 999;">
+            </div>
+        </div>
+
+        <p class="title">Data e hora da entrega</p>
+
+        <div class="aniversario">
+            <input name="dia" type="number" min="1" max="31" value="{{ frete.data_solicitacao.day }}" placeholder="dia" required>
+            <input name="mes" type="number" min="1" max="12" value="{{ frete.data_solicitacao.month }}" placeholder="mês" required>
+            <input name="ano" type="number" min="2024" max="2222" value="{{ frete.data_solicitacao.year }}" placeholder="ano" required>
+        </div>
+
+        <input
+            id="hora"
+            name="hora_solicitacao"
+            type="time"
+            value="{{ frete.hora_solicitacao|time:'H:i' }}"
+            style="margin-top:10px; text-align:center;"
+            required
+        >
+
+        
+            <div class="linha-botoes">
+                <button type="button" class="btnCancelar"
+                        onclick="window.location.href='{% url 'fretes_solicitados' request.session.usuario_id %}'">
+                    Cancelar
+                </button>                
+                <button class="btnEditar" type="submit">Salvar</button>
+            </div>
+
+
+        {% comment %} <div style="margin-top: 20px; display: flex; gap: 10px; justify-content:center;">
+            <a href="{% url 'fretes_solicitados' request.session.usuario_id %}" class="btnCancelar">Cancelar</a>
+            <button id="btnConcluir" type="submit">Salvar</button>
+        </div> {% endcomment %}
+    </form>
+{% endblock %}
+
+{% block extra_js %}
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.17.0/mapbox-gl.js'></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.min.js'></script>
+<script src="{% static 'js/solicitar_frete.js' %}"></script>
+{% endblock %}
+

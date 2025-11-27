@@ -9,6 +9,8 @@
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       crossorigin=""/>
 {% endblock %}
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 
 {% block content %}
 <!-- Topo -->
@@ -24,13 +26,14 @@
     </div>
 
     <!-- Mapa -->
-    <div id="map" class="map-container"></div>
 
     <!-- Botão para ver fretes -->
     {% comment %} <a href="{% url 'fretes_disponiveis' %}" class="btnFretes">
         Ver fretes disponíveis
     </a> {% endcomment %}
 </div>
+<div id="map" style="height: 400px; margin-top: 20px;"></div>
+
 {% endblock %}
 
 {% block extra_js %}

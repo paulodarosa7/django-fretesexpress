@@ -232,6 +232,13 @@
     height: 24px;
 }
 
+
+.menu-item .icon img {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+}
+
 .sair {
     color: #f3c316;
 }

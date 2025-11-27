@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 
 
+
 #   NAO ESTOU UTILIZANDO O LOGIN_REQUIRED DO DJANGO, POIS ESTOU FAZENDO MINHA PRÓPRIA AUTENTICAÇÃO.
 #   ENTÃO, PARA AS ROTAS QUE PRECISAM DE AUTENTICAÇÃO, ESTOU VERIFICANDO MANUALMENTE SE O USUÁRIO ESTÁ LOGADO.
 # COM:   usuario_id = request.session.get('usuario_id')
@@ -38,12 +39,12 @@ def login_user(request):
                 return redirect('welcome_user')
             else:
                 return render(request, 'tela_user.html', {
-                    'erro': 'Senha incorreta',
+                    'erro': 'erro',
                     'active': 'usuario'
                 })
         except Usuario.DoesNotExist:
             return render(request, 'tela_user.html', {
-                'erro': 'Usuário não encontrado',
+                'erro': 'erro',
                 'active': 'usuario'
             })
 
@@ -81,6 +82,7 @@ def cadastro_user(request):
         # verificar o que já foi cadastrado até o momento.
         # usuarios = { Usuario.objects.all() }
         # return render(request, 'listar_usuarios.html', {'usuarios': usuarios})
+        request.session['usuario_id'] = novo_usuario.id
         return redirect('welcome_user')   
 
         
@@ -133,9 +135,6 @@ def editar_perfil_user(request, id):
     return render(request, 'perfil/editar_perfil_user.html', {'usuario': usuario})
 
 
-
-
-# Solicitar frete
 def solicitar_frete(request, id):
     usuario_id = request.session.get('usuario_id')
     if not usuario_id:
@@ -148,6 +147,7 @@ def solicitar_frete(request, id):
 
     if request.method == 'POST':
         novo_frete = solicitarFrete()
+
         novo_frete.produto = request.POST.get('produto')
         novo_frete.peso = request.POST.get('peso')
         novo_frete.largura = request.POST.get('largura')
@@ -159,16 +159,30 @@ def solicitar_frete(request, id):
         dia = request.POST.get('dia')
         mes = request.POST.get('mes')
         ano = request.POST.get('ano')
-        novo_frete.data_entrega = f"{ano}-{mes}-{dia}"
-        novo_frete.hora = request.POST.get('hora')
+
+        try:
+            data_solicitacao = date(int(ano), int(mes), int(dia))
+        except ValueError:
+            messages.error(request, "Data inválida. Verifique o dia, mês e ano.")
+            return redirect('solicitar_frete', id=usuario_id)
+
+        if data_solicitacao < date.today():
+            messages.error(request, "A data de entrega não pode ser no passado.")
+            return redirect('solicitar_frete', id=usuario_id)
+
+        novo_frete.data_solicitacao = data_solicitacao
+
+        novo_frete.hora_solicitacao = request.POST.get('hora_solicitacao')
+
+
         novo_frete.status = "pendente"
         novo_frete.usuario = usuario_logado
-        novo_frete.save()
 
+        novo_frete.save()
         return redirect('frete_concluido', id=usuario_id)
 
-
     return render(request, 'tela_solicitar_frete.html', {'usuario': usuario_logado})
+
 
 # tela de frete após a sua conclusão
 # apos o pedido de frete - o usuario virá para essa tela
@@ -178,12 +192,12 @@ def frete_concluido(request, id):
         return redirect('login_user')  # redireciona se não estiver logado
 
     usuario = Usuario.objects.get(id=usuario_id)
-    fretes = solicitarFrete.objects.filter(usuario=usuario)
+    frete = solicitarFrete.objects.filter(usuario=usuario).last()
     
     return render(request, 'tela_frete_concluido.html', {
-        'fretes': fretes
+        'frete': frete
     })
-    
+
 def fretes_solicitados(request, id):
     # confirma se o usuário está logado
     usuario_id = request.session.get('usuario_id')
@@ -195,7 +209,7 @@ def fretes_solicitados(request, id):
         return redirect('login_user')
 
     usuario = Usuario.objects.get(id=usuario_id)
-
+    # esta causando problemas de misturar os cancelados com os ativos
     fretes = solicitarFrete.objects.filter(usuario=usuario).order_by('-data_solicitacao')
 
     return render(request, 'tela_fretes_solicitados.html', {
@@ -241,6 +255,60 @@ def status_frete(request, frete_id):
             'freteiro': freteiro
 
         })
+    
+#usuario cancela o frete
+def cancelar_frete(request, frete_id):
+    freteiro_id = request.session.get('freteiro_id') # verifica se o freteiro está logado
+    if not freteiro_id:
+        return redirect('login_freteiro')
+
+    frete = get_object_or_404(solicitarFrete, id=frete_id)
+
+    if frete.status in ["concluido", "cancelado"]:
+        messages.error(request, "Este frete já foi encerrado!")
+        return redirect('listar_fretes')
+
+    frete.status = "cancelado"
+    frete.save()
+
+    messages.success(request, "Frete cancelado com sucesso!")
+    return redirect('fretes_solicitados',  id=request.session.get('usuario_id'))
+
+#usuario edita o frete
+def editar_frete(request, frete_id):
+    usuario_id = request.session.get('usuario_id') # verifica se o freteiro está logado
+    if not usuario_id:
+        return redirect('login_user')
+    
+    frete = get_object_or_404(solicitarFrete, id=frete_id)
+    
+    if request.method == "POST":
+        frete.produto = request.POST.get("produto")
+        frete.peso = request.POST.get("peso")
+        frete.largura = request.POST.get("largura")
+        frete.altura = request.POST.get("altura")
+        frete.endereco_coleta = request.POST.get("endereco_coleta")
+        frete.endereco_entrega = request.POST.get("endereco_entrega")
+        
+        frete.dia = request.POST.get('dia')
+        frete.mes = request.POST.get('mes')
+        frete.ano = request.POST.get('ano')
+        try:
+            nova_data_solicitacao = date(int(frete.ano), int(frete.mes), int(frete.dia))
+        except ValueError:
+            messages.error(request, "Data inválida. Verifique o dia, mês e ano.")
+            return redirect('editar_frete', frete_id=frete_id)
+
+        if nova_data_solicitacao < date.today():
+            messages.error(request, "A data de entrega não pode ser no passado.")
+            return redirect('editar_frete', frete_id=frete_id)   
+        
+        frete.data_solicitacao = nova_data_solicitacao
+        frete.hora_solicitacao = request.POST.get("hora_solicitacao")
+        frete.peso = request.POST.get("peso")
+        frete.save()
+        return redirect('fretes_solicitados',  id=request.session.get('usuario_id'))
+    return render(request, 'tela_editar_frete.html',  {'frete': frete})
         
 
 # interação entre usuarios e freteiros
@@ -276,12 +344,12 @@ def login_freteiro(request):
                     'active': 'freteiro'
                 })
         except Freteiro.DoesNotExist:
-            return render(request, 'tela_user.html', {
+            return render(request, 'tela_motorista.html', {
                 'erro': 'Freteiro não encontrado',
                 'active': 'freteiro'
             })
     return render(request, 'tela_motorista.html', {
-        'active': 'freteiro'
+        'active': 'motorista'
         })
 
 def welcome_freteiro(request):
@@ -325,7 +393,7 @@ def editar_perfil_freteiro(request, id):
         freteiro.save()
 
         messages.success(request, "Perfil atualizado com sucesso!")
-        return redirect('perfil_freteiro')
+        return redirect('perfil_freteiro', freteiro_id)
 
     return render(request, 'perfil/editar_perfil_freteiro.html', {'freteiro': freteiro})
 
@@ -335,7 +403,9 @@ def cadastro_freteiro(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         email = request.POST.get('email')
+        confirmar_email = request.POST.get('confirmar_email')
         senha = request.POST.get('senha')
+        confirmar_senha = request.POST.get('confirmar_senha')
         tel = request.POST.get('tel')
         cpf = request.POST.get('cpf')
         cidade = request.POST.get('cidade')
@@ -353,10 +423,53 @@ def cadastro_freteiro(request):
         else:
             data_nascimento = None
             
-        if not nome or not email or not senha or not cpf:
-            return render(request, 'tela_cadastro_freteiro.html', {
-                'erro': 'Preencha todos os campos obrigatórios.'
-            })
+        # if not nome or not email or not senha or not cpf:
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'Preencha todos os campos obrigatórios.'
+        # })
+        
+        # # validar email duplicado
+        # if Freteiro.objects.filter(email=email).exists():
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'Email já cadastrado.'
+        # })
+
+        # # validar cpf duplicado
+        # if Freteiro.objects.filter(cpf=cpf).exists():
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'CPF já cadastrado.'
+        # })
+
+        # # validar telefone duplicado
+        # if tel and Freteiro.objects.filter(tel=tel).exists():
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'Telefone já cadastrado.'
+        # })
+
+        # # validar email = confirmar email
+        # if email != confirmar_email:
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'Os emails não coincidem.'
+        # })
+
+        # # validar senha = confirmar senha
+        # if senha != confirmar_senha:
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'As senhas não coincidem.'
+        # })
+        
+            
+        # hoje = date.today()
+        
+        # # calcular idade + 18 anos
+        # idade = hoje.year - data_nascimento.year - ((hoje.month, hoje.day) < (data_nascimento.month, data_nascimento.day)) 
+        
+        # if idade < 18:
+        #     return render(request, 'tela_cadastro_freteiro.html', {
+        #         'erro': 'Você deve ter pelo menos 18 anos para se cadastrar como freteiro.'
+        #     })
+        
+            
         novo_freteiro.data_nascimento = data_nascimento
 
         novo_freteiro.nome = nome
@@ -367,12 +480,16 @@ def cadastro_freteiro(request):
         novo_freteiro.cidade = cidade
         novo_freteiro.estado = estado
     
-        novo_freteiro.save()    
+        novo_freteiro.save() 
+        request.session['freteiro_id'] = novo_freteiro.id
         return redirect('welcome_freteiro')
 
     return render(request, 'tela_cadastro_freteiro.html')  
 
 # fretes e freteiros
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import solicitarFrete
+
 def aceitar_frete(request, frete_id):
     freteiro_id = request.session.get('freteiro_id')
     if not freteiro_id:
@@ -380,18 +497,20 @@ def aceitar_frete(request, frete_id):
 
     frete = get_object_or_404(solicitarFrete, id=frete_id)
 
-    # Verifica antes de modificar
-    if frete.status != "pendente":
-        messages.error(request, "Este frete já foi aceito por outro freteiro.")
-        return redirect('fretes_disponiveis')
+    if frete.status == "pendente":
+        frete.status = "aceito"
+        frete.freteiro_id = freteiro_id
+        frete.save()
+        return render(request, 'status_frete_freteiro.html', {
+            'frete': frete,
+        })
+    else:
+        return render(request, 'tela_fretes_disponiveis.html', {
+            'frete': frete,
+            'erro': f"Puts, acho que esse frete não está disponível. Status atual: {frete.status}"
+        })
 
-    # Agora sim modifica
-    frete.status = "aceito"
-    frete.freteiro_id = freteiro_id
-    frete.save()
 
-    messages.success(request, "Frete aceito com sucesso!")
-    return redirect('status_frete')
 
 # ver fretes em andamento
 def fretes_aceitos(request, id):
@@ -412,6 +531,27 @@ def fretes_aceitos(request, id):
         'fretes': fretes,
         'freteiro': freteiro
     })
+
+def recusar_frete(request, id, frete_id):
+    freteiro_id = request.session.get('freteiro_id')
+    if not freteiro_id:
+        return redirect('login_user')
+
+    frete = get_object_or_404(solicitarFrete, id=frete_id)
+
+    # impede recusar frete que não pertence ao freteiro
+    if frete.freteiro_id != freteiro_id:
+        messages.error(request, "Você não tem permissão para recusar este frete.")
+        return redirect('fretes_aceitos', freteiro_id)
+
+    # remover o freteiro e voltar para fila
+    frete.freteiro = None
+    frete.status = "pendente"
+    frete.save()
+
+    messages.success(request, "Frete recusado com sucesso!")
+    return redirect('fretes_aceitos', id=freteiro_id)
+
 
 # gestão de fretes
 def listar_fretes(request):
@@ -434,49 +574,49 @@ def listar_fretes(request):
         return render(request, 'gestao_fretes/fretes_listar.html', {'fretes': fretes})
     
     
-def atualizar_frete(request, id):
-    frete = get_object_or_404(solicitarFrete, id=id)
+# def atualizar_frete(request, id):
+#     frete = get_object_or_404(solicitarFrete, id=id)
 
-    if request.method == "POST":
-        form = FreteForm(request.POST, instance=frete)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Frete atualizado com sucesso!")
-            return redirect('listar_fretes')
-    else:
-        form = FreteForm(instance=frete)
+#     if request.method == "POST":
+#         form = FreteForm(request.POST, instance=frete)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Frete atualizado com sucesso!")
+#             return redirect('listar_fretes')
+#     else:
+#         form = FreteForm(instance=frete)
 
-    return render(request, 'gestao_fretes/fretes_editar.html', {'form': form, 'frete': frete})
+#     return render(request, 'gestao_fretes/fretes_editar.html', {'form': form, 'frete': frete})
 
 
-def cancelar_frete(request, id):
-    frete = get_object_or_404(solicitarFrete, id=id)
+# def cancelar_frete(request, id):
+#     frete = get_object_or_404(solicitarFrete, id=id)
 
-    if frete.status in ["concluido", "cancelado"]:
-        messages.error(request, "Este frete já foi encerrado!")
-        return redirect('listar_fretes')
+#     if frete.status in ["concluido", "cancelado"]:
+#         messages.error(request, "Este frete já foi encerrado!")
+#         return redirect('listar_fretes')
 
-    frete.status = "cancelado"
-    frete.save()
+#     frete.status = "cancelado"
+#     frete.save()
 
-    messages.success(request, "Frete cancelado com sucesso!")
-    return redirect('listar_fretes')
+#     messages.success(request, "Frete cancelado com sucesso!")
+#     return redirect('listar_fretes')
 
-def excluir_frete(request, id):
-    frete = get_object_or_404(solicitarFrete, id=id)
+# def excluir_frete(request, id):
+#     frete = get_object_or_404(solicitarFrete, id=id)
 
-    if frete.status in ["concluido", "cancelado"]:
-        messages.error(request, "Fretes concluídos/cancelados não podem ser excluídos.")
-        return redirect('listar_fretes')
+#     if frete.status in ["concluido", "cancelado"]:
+#         messages.error(request, "Fretes concluídos/cancelados não podem ser excluídos.")
+#         return redirect('listar_fretes')
 
-    if request.method == "POST":
-        frete.delete()
-        messages.success(request, "Frete excluído com sucesso!")
-        return redirect('listar_fretes')
+#     if request.method == "POST":
+#         frete.delete()
+#         messages.success(request, "Frete excluído com sucesso!")
+#         return redirect('listar_fretes')
 
-    return render(request, 'gestao_fretes/fretes_excluir.html', {
-        'frete': frete,
-    })
+#     return render(request, 'gestao_fretes/fretes_excluir.html', {
+#         'frete': frete,
+#     })
 
 
 # Administração geral
@@ -554,3 +694,30 @@ def logout(request):
     request.session.flush()
     return redirect('login_user')
 
+
+#Calcular rota
+def calcular_rota(request, frete_id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        # Exemplo: pegar o frete correspondente
+        try:
+            frete = Frete.objects.get(id=frete_id)
+        except Frete.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Frete não encontrado'})
+
+        # Salvar a rota associada ao frete
+        Rota.objects.create(
+            frete=frete,  # se você tiver FK
+            origem=data['origem'],
+            destino=data['destino'],
+            distancia=float(data['distancia']),
+            custo=float(data['custo']),
+            tempo_minutos=int(data['tempoMinutos'])
+        )
+
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False})
+
+#apresenta a rota e custo

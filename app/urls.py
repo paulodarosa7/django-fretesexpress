@@ -23,7 +23,9 @@ urlpatterns = [
     path('user/<int:id>/fretes/solicitar/', views.solicitar_frete, name='solicitar_frete'),
     path('user/<int:id>/frete/concluido/', views.frete_concluido, name='frete_concluido'),
     path('frete/<int:frete_id>/status/', views.status_frete, name='status_frete'),
-
+    path('frete/<int:frete_id>/editar/', views.editar_frete, name='editar_frete'),
+    path('frete/<int:frete_id>/cancelar/', views.cancelar_frete, name='cancelar_frete'),
+    
     # path('user/<int:id>/frete/<int:id>/editar', views.solicitar_frete, name='solicitar_frete'),
 
     
@@ -44,13 +46,16 @@ urlpatterns = [
     path('motorista/frete/<int:frete_id>/aceitar/', views.aceitar_frete, name='aceitar_frete'),
     path('motorista/fretes/status/<int:frete_id>', views.status_frete, name='status_frete_freteiro'),
     path('motorista/<int:id>/meus/fretes/', views.fretes_aceitos, name='fretes_aceitos'),
+    path('motorista/<int:id>/recusar/frete/<int:frete_id>/', views.recusar_frete, name='recusar_frete'),
+
+
 
     
     # gestão de fretes
-    path('fretes/', views.listar_fretes, name='listar_fretes'),
-    path('fretes/<int:id>/atualizar/', views.atualizar_frete, name='atualizar_frete'),
-    path('fretes/<int:id>/cancelar/', views.cancelar_frete, name='cancelar_frete'),
-    path('fretes/<int:id>/excluir/', views.excluir_frete, name='excluir_frete'),
+    # path('fretes/', views.listar_fretes, name='listar_fretes'),
+    # path('fretes/<int:id>/atualizar/', views.atualizar_frete, name='atualizar_frete'),
+    # path('fretes/<int:id>/cancelar/', views.cancelar_frete, name='cancelar_frete'),
+    # path('fretes/<int:id>/excluir/', views.excluir_frete, name='excluir_frete'),
 
     
     # admininstração
@@ -63,6 +68,8 @@ urlpatterns = [
     #SAIR
     path('logout/', views.logout, name='logout'),
 
+    #CALCULO DA ROTA
+    path('frete/<int:frete_id>/calcular/rota/', views.calcular_rota, name='calcular_rota'),
 
 
 

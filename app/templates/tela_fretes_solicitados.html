@@ -7,6 +7,8 @@
 
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/status_frete.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -18,7 +20,7 @@
     <div class="frete-card">
 
         <div class="frete-titulo">
-            Frete #{{ frete.id }} - {{ frete.produto }}
+            Frete: {{ frete.produto }}
         </div>
 
         <div class="frete-info">
@@ -34,18 +36,84 @@
 
         </div>
 
-        <div class="frete-status status-{{ frete.status|lower }}">
-            {{ frete.status|title }}
+        <div class="frete-status status-{{ frete.status }}">
+            {{ frete.status }}
         </div>
 
         {% if frete.status == "pendente" or frete.status == "aceito" %}
             <a href="{% url 'status_frete' frete.id %}" class="btnAcompanhar">Acompanhar</a>
+
+        {% if request.session.usuario_id %}
+            <div class="linha-botoes">
+                <!-- cancelar -->
+                <button class="btnCancelar" onclick="abrirModalCancelar({{ frete.id }})">Cancelar</button>
+
+                <!-- editar -->
+                <a href="{% url 'editar_frete' frete.id %}" class="btnEditar">Editar</a>
+            </div>
+
+            <div id="modalCancelar-{{ frete.id }}" class="modal">
+                <div class="modal-content">
+                    <h3>Tem certeza que deseja cancelar o frete?</h3>
+                    <p>Esta ação não poderá ser desfeita.</p>
+                    <div class="modal-buttons">
+                        <button class="btnNao" onclick="fecharModalCancelar({{ frete.id }})">Não</button>
+                        <a href="{% url 'cancelar_frete' frete.id %}" class="btnSim">Sim, cancelar</a>
+                    </div>
+                </div>
+            </div>
+            {% elif request.session.freteiro_id %}
+                <div class="linha-botoes">
+                    <!-- RECUSAR -->
+                    <button class="btnCancelar" onclick="abrirModalRecusar({{ frete.id }})">
+                        Recusar
+                    </button>
+                </div>
+
+                <!-- MODAL RECUSAR -->
+                <div id="modalRecusar-{{ frete.id }}" class="modal">
+                    <div class="modal-content">
+                        <h3>Tem certeza que deseja recusar este frete?</h3>
+                        <p>Você deixará de visualizar este frete, mas ele continuará ativo para outros freteiros.</p>
+                        <div class="modal-buttons">
+                            <button class="btnNao" onclick="fecharModalRecusar({{ frete.id }})">Não</button>
+                            <a href="{% url 'recusar_frete' freteiro.id frete.id %}" class="btnSim">Sim, recusar</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+
         {% endif %}
 
     </div>
     {% empty %}
+    {% if request.session.usuario_id %}
         <p>Você ainda não solicitou nenhum frete.</p>
+    {% elif request.session.freteiro_id %}
+        <p>Você ainda não aceitou nenhum frete.</p>
+    {% endif %}
+
+
     {% endfor %}
 </div>
+<script>
+    function abrirModalCancelar(id) {
+        document.getElementById("modalCancelar-" + id).style.display = "flex";
+    }
+
+    function fecharModalCancelar(id) {
+        document.getElementById("modalCancelar-" + id).style.display = "none";
+    }
+
+    function abrirModalRecusar(id) {
+        document.getElementById("modalRecusar-" + id).style.display = "flex";
+    }
+
+    function fecharModalRecusar(id) {
+        document.getElementById("modalRecusar-" + id).style.display = "none";
+    }
+
+</script>
 
 {% endblock %}

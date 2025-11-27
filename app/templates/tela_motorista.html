@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/tela_login.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -26,6 +28,9 @@
             <input name="senha" type="password" placeholder="senha">
 
             <button class="btnInicio" type="submit">dar partida</button>
+            {% if erro %}
+                <p id="erro" class="erro">Usuário ou senha inválidos</p>
+            {% endif %}
 
             <a href="{% url 'cadastro_freteiro' %}" class="cadastro_freteiro">torne-se um freteiro!</a>
             <a href="{% url 'cadastro_user' %}" class="cadastro_usuario">cadastre-se como solicitante</a>

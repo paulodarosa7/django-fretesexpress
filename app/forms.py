@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Usuario, Freteiro, solicitarFrete
+from .models import Usuario, Freteiro, solicitarFrete, Rota
 
 class UsuarioForm(forms.ModelForm):
     class Meta:

@@ -11,8 +11,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 100vh;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-bottom: 20px;
 }
 
 .topo {
@@ -36,11 +37,21 @@ body {
   width: 22px;
 }
 
-.mapa-img {
-  width: 90%;
-  border-radius: 15px;
+/* Mapa */
+/* #map {
+        width: 90%;
+        height: 380px;
+        border-radius: 15px;
+        margin: 0 auto;
+        margin-top: 10px;
+} */
+
+.trajeto {
+  width: 100%;
+  height: 100%;
 }
 
+/* Informações do frete */
 .info {
   background-color: #111;
   width: 90%;
@@ -60,12 +71,13 @@ body {
 }
 
 .rodape {
-  margin-bottom: 25px;
+  margin-top: 15px;
   font-weight: 500;
   color: #ffc400;
+  text-align: center;
 }
 
-/* meus fretes */
+/* Meus fretes */
 #lista-fretes {
   width: 90%;
   margin: 20px auto;
@@ -96,7 +108,7 @@ body {
 }
 
 .frete-info {
-  color: #ccc;
+  color: white;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -111,25 +123,10 @@ body {
 }
 
 /* Status específicos */
-.status-pendente {
-  background-color: #ffc400;
-  color: #000;
-}
-
-.status-aceito {
-  background-color: #00c853;
-  color: white;
-}
-
-.status-entregue {
-  background-color: #0095ff;
-  color: white;
-}
-
-.status-cancelado {
-  background-color: #ff1744;
-  color: white;
-}
+.status-pendente { background-color: #ffc400; color: #000; }
+.status-aceito { background-color: #00c853; color: white; }
+.status-entregue { background-color: #0095ff; color: white; }
+.status-cancelado { background-color: #ff1744; color: white; }
 
 .frete-btn {
   display: inline-block;
@@ -143,25 +140,175 @@ body {
   transition: background 0.2s ease;
 }
 
-.frete-btn:hover {
-  background-color: #e6b200;
-}
+.frete-btn:hover { background-color: #e6b200; }
 
 .btnAcompanhar {
-    display: block;
-    margin-top: 12px;
-    background-color: #ffc400;
-    color: #000;
-    text-align: center;
-    padding: 10px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 16px;
-    text-decoration: none;
-    transition: 0.2s ease;
+  display: block;
+  margin-top: 12px;
+  background-color: #ffc400;
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: 0.2s ease;
 }
 
-.btnAcompanhar:hover {
-    background-color: #e6b000;
+.btnAcompanhar:hover { background-color: #e6b000; }
+
+/* Leaflet estilos */
+.leaflet-popup-content-wrapper {
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
 }
 
+/* Painel da rota - tema escuro */
+.leaflet-routing-container,
+.leaflet-routing-container * {
+    background: #111 !important;
+    color: #f1f1f1 !important;
+    border: none !important;
+}
+
+/* Caixa do painel */
+.leaflet-bar,
+.leaflet-routing-container.leaflet-bar {
+    background: rgba(10, 10, 10, 0.92) !important;
+    border: 1px solid #333 !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(6px);
+    color: #fff !important;
+}
+
+/* Header "A → B" */
+.leaflet-routing-container h2,
+.leaflet-routing-alt h2 {
+    color: #ffc400 !important;
+    font-size: 16px !important;
+}
+
+/* texto das instruções */
+.leaflet-routing-alt,
+.leaflet-routing-alt table,
+.leaflet-routing-directions {
+    background: transparent !important;
+    color: #ddd !important;
+}
+
+/* Linhas da tabela */
+.leaflet-routing-alt td {
+    border: none !important;
+    padding: 6px 4px !important;
+}
+
+/* Ícones das setas */
+.leaflet-routing-icon {
+    filter: invert(90%) brightness(160%) !important;
+}
+
+/* Scrollbar escuro */
+.leaflet-bar::-webkit-scrollbar {
+    width: 6px;
+}
+.leaflet-bar::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 8px;
+}
+
+
+.icone-localizacao {
+  width: 32px;
+  height: 32px;
+  background: #ffb700;
+  border-radius: 50%;
+  box-shadow: 0 0 20px 8px rgba(255, 183, 0, 0.5); /* brilho */
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-content {
+  background: #1E1E1E;
+  padding: 25px;
+  width: 90%;
+  max-width: 350px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+  border: 1px solid #444;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btnSim, .btnNao {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.btnSim {
+  background: #d9534f;
+  color: white;
+  text-decoration: none;
+}
+
+.btnNao {
+  background: #555;
+  color: white;
+}
+
+.linha-botoes {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.btnCancelar,
+.btnEditar {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* Cancelar */
+.btnCancelar {
+  background: #d9534f;
+  color: #fff;
+}
+.btnCancelar:hover {
+  background: #c64540;
+}
+
+.btnEditar {
+  background: #107902;
+  color: #fff;
+}
+.btnEditar:hover {
+  background: #128802;
+}

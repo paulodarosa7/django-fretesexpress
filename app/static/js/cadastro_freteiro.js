@@ -24,3 +24,4 @@ btnContinuar.addEventListener("click", (e) => {
   telaCadastro1.classList.add("hidden");
   telaCadastro2.classList.remove("hidden");
 });
+

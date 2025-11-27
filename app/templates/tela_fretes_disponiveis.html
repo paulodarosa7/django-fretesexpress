@@ -5,6 +5,8 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/fretes_disponiveis.css' %}">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -16,13 +18,23 @@
 <div class="container">
     <h2>Fretes Disponíveis</h2>
 
+    {% if erro %}
+        <div class="alert alert-error">{{ erro }}</div>
+        <a href="{% url 'fretes_disponiveis' %}" class="btnAceitar">voltar para fretes disponíveis</a>
+    {% endif %}
+
+
     {% if fretes %}
         {% for frete in fretes %}
             <div class="card-frete">
                 <h3>{{ frete.produto }}</h3>
-                <p><strong>Origem:</strong> {{ frete.endereco_coleta }}</p>
-                <p><strong>Destino:</strong> {{ frete.endereco_entrega }}</p>
-                <p><strong>Valor:</strong> R$ {{ frete.valor }}</p>
+                <p><b>Origem:</b> {{ frete.endereco_coleta }}</p>
+                <p><b>Destino:</b> {{ frete.endereco_entrega }}</p>
+                <p><b>Data:</b> {{ frete.data_solicitacao }} às {{ frete.hora_solicitacao }}<br></p>
+                <p><b>Valor do item:</b> R$ {{ frete.valor }}</p>
+                <p><b>Detalhes:</b> {{ frete.peso }}kg | Medidas: {{ frete.altura }}cm x {{frete.largura}}cm</p>
+
+
 
                 <a href="{% url 'aceitar_frete' frete.id %}" class="btnAceitar">
                     Aceitar Frete
