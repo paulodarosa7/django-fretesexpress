@@ -26,10 +26,7 @@ urlpatterns = [
     path('frete/<int:frete_id>/editar/', views.editar_frete, name='editar_frete'),
     path('frete/<int:frete_id>/cancelar/', views.cancelar_frete, name='cancelar_frete'),
     
-    # path('user/<int:id>/frete/<int:id>/editar', views.solicitar_frete, name='solicitar_frete'),
-
     
-
     
     # rotas freteiro
     path('motorista/login/', views.login_freteiro, name='login_freteiro'),
@@ -47,22 +44,6 @@ urlpatterns = [
     path('motorista/fretes/status/<int:frete_id>', views.status_frete, name='status_frete_freteiro'),
     path('motorista/<int:id>/meus/fretes/', views.fretes_aceitos, name='fretes_aceitos'),
     path('motorista/<int:id>/recusar/frete/<int:frete_id>/', views.recusar_frete, name='recusar_frete'),
-
-
-
-    
-    # gestão de fretes
-    # path('fretes/', views.listar_fretes, name='listar_fretes'),
-    # path('fretes/<int:id>/atualizar/', views.atualizar_frete, name='atualizar_frete'),
-    # path('fretes/<int:id>/cancelar/', views.cancelar_frete, name='cancelar_frete'),
-    # path('fretes/<int:id>/excluir/', views.excluir_frete, name='excluir_frete'),
-
-    
-    # admininstração
-    path('suporte/usuarios/', views.listar_usuarios_geral, name='listar_usuarios_geral'), #listar todos os usuarios e freteiros
-    path('suporte/<str:tipo>/<int:id>/editar/', views.update_geral, name='update_geral'), #listar todos os usuarios e freteiros
-    path('suporte/<str:tipo>/<int:id>/excluir/', views.excluir_geral, name='excluir_geral'), #listar todos os usuarios e freteiros
-
 
 
     #SAIR

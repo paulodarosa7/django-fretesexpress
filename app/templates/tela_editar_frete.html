@@ -37,6 +37,12 @@
                 <input type="text" name="altura" value="{{ frete.altura }}" placeholder="altura" required>
                 <span>cm</span>
             </div>
+            
+                
+            <div class="input-sufixo">
+                <input type="text" name="comprimento" value="{{ frete.comprimento }}" placeholder="comprimento" required>
+                <span>cm</span>
+            </div>
         </div>
 
         <div class="input-prefixo">
@@ -111,6 +117,9 @@
             <a href="{% url 'fretes_solicitados' request.session.usuario_id %}" class="btnCancelar">Cancelar</a>
             <button id="btnConcluir" type="submit">Salvar</button>
         </div> {% endcomment %}
+            {% if erro %}
+                <p id="erro" class="erro">Data está inválida</p>
+            {% endif %}
     </form>
 {% endblock %}
 

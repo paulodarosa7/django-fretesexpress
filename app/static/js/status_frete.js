@@ -63,13 +63,13 @@ async function iniciarMapa() {
 
 
     // 4) Renderiza a rota com OSRM
-    var rota = L.Routing.control({
+    let rota = L.Routing.control({
         waypoints: [
             L.latLng(origem.lat, origem.lng),
             L.latLng(destino.lat, destino.lng)
         ],
         router: L.Routing.osrmv1({
-            serviceUrl: "https://router.project-osrm.org/route/v1" // servidor gratuito OSRM
+            serviceUrl: "https://router.project-osrm.org/route/v1"
         }),
         lineOptions: {
             styles: [
@@ -85,42 +85,81 @@ async function iniciarMapa() {
         draggableWaypoints: false
     }).addTo(map);
 
-    
-rota.on('routesfound', function(e) {
-    var summary = e.routes[0].summary;
-    const distanciaKm = summary.totalDistance / 1000;
-    const tempoMin = Math.round(summary.totalTime % 3600 / 60);
-    const custo = distanciaKm * 2;
+    // ⚡ ADICIONAR CÁLCULO DA DISTÂNCIA + 3 REAIS POR KM
+    rota.on("routesfound", function (e) {
+        const summary = e.routes[0].summary;
+        
 
-    // Atualiza na página
-    document.getElementById('distancia').textContent = `Distância: ${distanciaKm.toFixed(2)} km`;
-    document.getElementById('tempo').textContent = `Tempo: ${tempoMin} minutos`;
-    document.getElementById('custo').textContent = `Custo: R$ ${custo.toFixed(2)}`;
+        const distanciaKm = summary.totalDistance / 1000; 
+        const custo = distanciaKm * 3; 
 
-    // Envia para o Django
-    fetch(`/frete/${freteId}/salvar-rota/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken') 
-        },
-        body: JSON.stringify({
-            origem: '{{ frete.endereco_coleta }}',
-            destino: '{{ frete.endereco_entrega }}',
-            distancia: distanciaKm.toFixed(2),
-            custo: custo.toFixed(2),
-            tempoMinutos: tempoMin
+        console.log("Distância:", distanciaKm.toFixed(2), "km");
+        console.log("Preço total: R$", custo.toFixed(2));
+
+        // 1) MOSTRAR NA TELA (distância ok)
+        document.getElementById("distancia_km").textContent = `${distanciaKm.toFixed(2)} km`;
+
+        // 2) ENVIAR PARA O DJANGO
+        fetch(`/frete/${freteId}/calcular/rota/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: JSON.stringify({
+                distancia_km: distanciaKm,
+                custo_frete: custo  // ← este é só temporário, quem manda é o backend
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data.success){
-            console.log('Rota salva no banco!');
-        } else {
-            console.error('Erro ao salvar rota:', data.error);
-        }
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+
+                // EXIBIR O VALOR REAL vindo do servidor
+                document.getElementById("custo_frete").textContent =
+                    `R$ ${data.valor_custo.toFixed(2)}`;
+            }
+        });
     });
-});
+}
 
 // Executa ao abrir a página
 iniciarMapa();
+
+async function salvarCalculo(freteId, distanciaKm, custoFrete) {
+    try {
+        const response = await fetch(`/frete/${freteId}/calcular/rota/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken") // obrigatório
+            },
+            body: JSON.stringify({
+                distancia_km: distanciaKm,
+                custo_frete: custoFrete
+            })
+        });
+
+        const data = await response.json();
+        console.log("Resposta backend:", data);
+
+    } catch (error) {
+        console.error("Erro ao enviar cálculo:", error);
+    }
+}
+
+// helper do Django
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

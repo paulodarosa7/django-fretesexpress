@@ -49,7 +49,11 @@
         <p>⚫ Entregar em: {{ frete.endereco_entrega }}</p>
         <p>📅 Data: {{ frete.data_solicitacao }}</p>
         <p>🕰️ Horário: {{ frete.hora_solicitacao }}</p>
-        <span class="preco">R$ {{ frete.valor }}</span>
+        <p>💵 Valor do Item: <b>R$ {{ frete.valor }} </b></p>
+        <p>Distância: <span id="distancia_km"></span></p>
+
+
+        <span class="preco" id="custo_frete"></span>
     </div>
 
     <!-- Status -->
@@ -78,6 +82,10 @@
 <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.17.0/mapbox-gl.js"></script>
+
+<script>
+    const freteId = {{ frete.id }};
+</script>
 
 <script src="{% static 'js/status_frete.js' %}"></script>
 {% endblock %}
