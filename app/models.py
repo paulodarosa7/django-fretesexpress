@@ -39,7 +39,6 @@ class solicitarFrete(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
     distancia_km = models.FloatField(null=True)
     custo_frete = models.FloatField(null=True)  
-    # tempo_frete = models.CharField(max_length=50, null=True) 
     
     status = models.CharField(max_length=20, default="pendente") # determina o status atual do frete
     # um para muitos
