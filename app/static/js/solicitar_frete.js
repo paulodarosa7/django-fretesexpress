@@ -1,6 +1,6 @@
 // solicitar_frete.js
 
-const mapboxToken = 'pk.eyJ1Ijoid3Vlc2xleW1heCIsImEiOiJjbWk4MmFxZnYwN210Mmxvc2Y4b25kaDdkIn0.KlU45qR_UwafsiKxPy2y_A';
+const mapboxToken = '';
 
 function autocomplete(inputId, listId) {
   const input = document.getElementById(inputId);
