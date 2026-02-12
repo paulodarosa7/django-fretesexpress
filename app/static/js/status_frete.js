@@ -1,7 +1,7 @@
 // ======================================================
 // CONFIGURAÇÃO DO MAPBOX
 // ======================================================
-const MAPBOX_TOKEN = 'pk.eyJ1Ijoid3Vlc2xleW1heCIsImEiOiJjbWk4MmFxZnYwN210Mmxvc2Y4b25kaDdkIn0.KlU45qR_UwafsiKxPy2y_A';
+const MAPBOX_TOKEN = '';
 
 // ======================================================
 // PEGA OS ENDEREÇOS DO TEMPLATE DJANGO (JÁ RENDERIZADOS)
